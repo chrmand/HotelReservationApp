@@ -15,7 +15,11 @@ import static javax.swing.JOptionPane.showMessageDialog;
  */
 public class MainMenu extends javax.swing.JFrame {
 
-     static Connection con;
+   static Connection con;
+     
+  
+     
+    
     /**
      * Creates new form MainMenu
      */
@@ -23,9 +27,11 @@ public class MainMenu extends javax.swing.JFrame {
         initComponents();
     }
     
+  
     public static Connection getCon() {
         return con;
     }
+    
     
     /**
      * Connect Action JDialog 
@@ -34,6 +40,8 @@ public class MainMenu extends javax.swing.JFrame {
         JDialogConnect connect = new JDialogConnect(this, true);
         connect.setVisible(true);
         
+        
+       
         if (!connect.getUserChoosedOkFlag()) {
             System.out.println("User Pressed Cancel!");
             return;
@@ -62,8 +70,10 @@ public class MainMenu extends javax.swing.JFrame {
             }
             
         }  
+       
+       
          
-    }   
+    } 
     
     /**
      * Disconnect Action. 
@@ -83,25 +93,38 @@ public class MainMenu extends javax.swing.JFrame {
      public void setActionStatus(){
         if ( !jMenuItemConnect.isEnabled() ) {
             jMenuItemDisconnect.setEnabled(true);
-            jMenu.setEnabled(true);
-            jMenuLogIn.setEnabled(true);
+            jMenuLogin.setEnabled(true);
+            
+            jButtonEmployee.setEnabled(true);
+            jButtonClient.setEnabled(true);
+            jButtonBooking.setEnabled(true);
+            jButtonRoom.setEnabled(true);
+            jButtonPayment.setEnabled(true);
+            jButtonStorage.setEnabled(true);
             
             
         }
         else {
-            jMenuItemDisconnect.setEnabled(false);
-            jMenu.setEnabled(false);
-            jMenuLogIn.setEnabled(false);
             
+            jMenuItemDisconnect.setEnabled(false);
+            jMenuLogin.setEnabled(false);
+            
+            jButtonEmployee.setEnabled(false);
+            jButtonClient.setEnabled(false);
+            jButtonBooking.setEnabled(false);
+            jButtonRoom.setEnabled(false);
+            jButtonPayment.setEnabled(false);
+            jButtonStorage.setEnabled(false);
           
         }
     }
+     
      
     public void exitAction(){
        this.dispose();
     }
     
-    
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -112,20 +135,49 @@ public class MainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButtonEmployee = new javax.swing.JButton();
+        jButtonStorage = new javax.swing.JButton();
+        jButtonClient = new javax.swing.JButton();
+        jButtonBooking = new javax.swing.JButton();
+        jButtonRoom = new javax.swing.JButton();
+        jButtonPayment = new javax.swing.JButton();
+        jButtonExit = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuConnectDB = new javax.swing.JMenu();
         jMenuItemConnect = new javax.swing.JMenuItem();
         jMenuItemDisconnect = new javax.swing.JMenuItem();
-        jMenu = new javax.swing.JMenu();
-        jMenuLogIn = new javax.swing.JMenu();
-        jMenuItemEmployee = new javax.swing.JMenuItem();
-        jMenuItemAdministrator = new javax.swing.JMenuItem();
+        jMenuLogin = new javax.swing.JMenu();
         jMenuExit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotel Reservation App");
         setBounds(new java.awt.Rectangle(500, 200, 200, 200));
         setResizable(false);
+
+        jButtonEmployee.setText("EMPLOYEE");
+        jButtonEmployee.setEnabled(false);
+
+        jButtonStorage.setText("STORAGE");
+        jButtonStorage.setEnabled(false);
+
+        jButtonClient.setText("CLIENT");
+        jButtonClient.setEnabled(false);
+
+        jButtonBooking.setText("BOOKING");
+        jButtonBooking.setEnabled(false);
+
+        jButtonRoom.setText("ROOM");
+        jButtonRoom.setEnabled(false);
+
+        jButtonPayment.setText("PAYMENT");
+        jButtonPayment.setEnabled(false);
+
+        jButtonExit.setText("EXIT");
+        jButtonExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExitActionPerformed(evt);
+            }
+        });
 
         jMenuConnectDB.setText("ConnectDB");
 
@@ -148,21 +200,15 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuBar.add(jMenuConnectDB);
 
-        jMenu.setText("Menu");
-        jMenu.setEnabled(false);
-        jMenuBar.add(jMenu);
-
-        jMenuLogIn.setForeground(new java.awt.Color(0, 204, 0));
-        jMenuLogIn.setText("Log In");
-        jMenuLogIn.setEnabled(false);
-
-        jMenuItemEmployee.setText("Employee");
-        jMenuLogIn.add(jMenuItemEmployee);
-
-        jMenuItemAdministrator.setText("Administrator");
-        jMenuLogIn.add(jMenuItemAdministrator);
-
-        jMenuBar.add(jMenuLogIn);
+        jMenuLogin.setForeground(new java.awt.Color(0, 204, 0));
+        jMenuLogin.setText("Login");
+        jMenuLogin.setEnabled(false);
+        jMenuLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuLoginActionPerformed(evt);
+            }
+        });
+        jMenuBar.add(jMenuLogin);
 
         jMenuExit.setForeground(new java.awt.Color(255, 51, 51));
         jMenuExit.setText("Exit");
@@ -179,27 +225,69 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1047, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonClient, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(903, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonStorage, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonExit)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 589, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jButtonEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonClient, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jButtonBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jButtonRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jButtonStorage, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(jButtonExit)
+                .addGap(23, 23, 23))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConnectActionPerformed
-        connectAction();
+       connectAction();
+       
     }//GEN-LAST:event_jMenuItemConnectActionPerformed
 
     private void jMenuItemDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDisconnectActionPerformed
-        disconnectAction();
+       disconnectAction();
     }//GEN-LAST:event_jMenuItemDisconnectActionPerformed
 
     private void jMenuExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuExitMouseClicked
         exitAction();
     }//GEN-LAST:event_jMenuExitMouseClicked
+
+    private void jMenuLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuLoginActionPerformed
+
+    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
+        // TODO add your handling code here:
+        exitAction();
+    }//GEN-LAST:event_jButtonExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,14 +325,18 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu;
+    private javax.swing.JButton jButtonBooking;
+    private javax.swing.JButton jButtonClient;
+    private javax.swing.JButton jButtonEmployee;
+    private javax.swing.JButton jButtonExit;
+    private javax.swing.JButton jButtonPayment;
+    private javax.swing.JButton jButtonRoom;
+    private javax.swing.JButton jButtonStorage;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuConnectDB;
     private javax.swing.JMenu jMenuExit;
-    private javax.swing.JMenuItem jMenuItemAdministrator;
     private javax.swing.JMenuItem jMenuItemConnect;
     private javax.swing.JMenuItem jMenuItemDisconnect;
-    private javax.swing.JMenuItem jMenuItemEmployee;
-    private javax.swing.JMenu jMenuLogIn;
+    private javax.swing.JMenu jMenuLogin;
     // End of variables declaration//GEN-END:variables
 }
