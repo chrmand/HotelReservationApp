@@ -71,7 +71,12 @@ public class MainMenu extends javax.swing.JFrame {
             
         }  
        
-       
+            /*
+        
+            JDialogLogin login = new JDialogLogin(this, true);
+            login.setVisible(true);
+        
+            */
          
     } 
     
@@ -118,7 +123,61 @@ public class MainMenu extends javax.swing.JFrame {
           
         }
     }
-     
+    
+     /**
+     * EMPLOYEE JDialog 
+     */
+    public void connectEmployeeAction() {
+        JDialogEmployee conEmployee = new JDialogEmployee(this, true);
+        conEmployee.setVisible(true);
+        
+        if (!conEmployee.getUserChoosedOkFlag()) {
+            System.out.println("User Pressed Cancel!");
+            return;
+        }
+        
+        else {
+            System.out.println("User Pressed OK!");
+            
+            System.out.println("Firstname: "+ conEmployee.getFirstname()); 
+            System.out.println("Lastname: "+ conEmployee.getLastname());
+            System.out.println("AFM: "+ conEmployee.getAFM());
+            System.out.println("Hire Date: "+ conEmployee.getHireDate());
+            System.out.println("Type: "+ conEmployee.getEType());
+            System.out.println("Manages StorageID: "+ conEmployee.getManagesStorageID());
+            
+                              
+        }
+    }
+    
+    /**
+     * Client JDialog 
+     */
+    public void connectClientAction() {
+        JDialogClient conClient = new JDialogClient(this, true);
+        conClient.setVisible(true);
+        
+        
+        if (!conClient.getUserChoosedOkFlag()) {
+            System.out.println("User Pressed Cancel!");
+            return;
+        }
+        
+        else {
+            System.out.println("User Pressed OK!");
+            
+            System.out.println("AFM: "+ conClient.getAFM()); 
+            System.out.println("Firstname: "+ conClient.getFirstname()); 
+            System.out.println("Lastname: "+ conClient.getLastname()); 
+            System.out.println("Phone: "+ conClient.getPhone()); 
+            System.out.println("Country: "+ conClient.getCountry());
+            System.out.println("City: "+ conClient.getCity());
+            System.out.println("Street: "+ conClient.getStreet());
+            System.out.println("Number: "+ conClient.getNumber());
+            System.out.println("TK: "+ conClient.getTK());
+                              
+        }
+    }
      
     public void exitAction(){
        this.dispose();
@@ -152,16 +211,27 @@ public class MainMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotel Reservation App");
         setBounds(new java.awt.Rectangle(500, 200, 200, 200));
+        setPreferredSize(new java.awt.Dimension(1050, 610));
         setResizable(false);
 
         jButtonEmployee.setText("EMPLOYEE");
         jButtonEmployee.setEnabled(false);
+        jButtonEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEmployeeActionPerformed(evt);
+            }
+        });
 
         jButtonStorage.setText("STORAGE");
         jButtonStorage.setEnabled(false);
 
         jButtonClient.setText("CLIENT");
         jButtonClient.setEnabled(false);
+        jButtonClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClientActionPerformed(evt);
+            }
+        });
 
         jButtonBooking.setText("BOOKING");
         jButtonBooking.setEnabled(false);
@@ -228,17 +298,13 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonClient, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(903, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonStorage, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jButtonEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonClient, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonStorage, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(655, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonExit)
@@ -288,6 +354,14 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         exitAction();
     }//GEN-LAST:event_jButtonExitActionPerformed
+
+    private void jButtonEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEmployeeActionPerformed
+        connectEmployeeAction();
+    }//GEN-LAST:event_jButtonEmployeeActionPerformed
+
+    private void jButtonClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientActionPerformed
+        connectClientAction();
+    }//GEN-LAST:event_jButtonClientActionPerformed
 
     /**
      * @param args the command line arguments
