@@ -178,6 +178,56 @@ public class MainMenu extends javax.swing.JFrame {
                               
         }
     }
+    
+    /**
+     * Booking JDialog 
+     */
+    public void connectBookingAction() {
+        JDialogBooking conBooking = new JDialogBooking(this, true);
+        conBooking.setVisible(true);
+        
+        
+        if (!conBooking.getUserChoosedOkFlag()) {
+            System.out.println("User Pressed Cancel!");
+            return;
+        }
+        
+        else {
+            System.out.println("User Pressed OK!");
+            
+            System.out.println("ID: "+ conBooking.getID()); 
+            System.out.println("Check IN: "+ conBooking.getCheckIN()); 
+            System.out.println("Check Out: "+ conBooking.getCheckOUT()); 
+            System.out.println("Persons: "+ conBooking.getPersons()); 
+            System.out.println("Number Of Days: "+ conBooking.getNumOfDays());
+            System.out.println("RoomID: "+ conBooking.getRoomID());
+        
+                              
+        }
+    }
+    
+    /**
+     * Room JDialog 
+     */
+    public void connectRoomAction() {
+        JDialogRoom conRoom = new JDialogRoom(this, true);
+        conRoom.setVisible(true);
+        
+        
+        if (!conRoom.getUserChoosedOkFlag()) {
+            System.out.println("User Pressed Cancel!");
+            return;
+        }
+        
+        else {
+            System.out.println("User Pressed OK!");
+            
+            System.out.println("ID: "+ conRoom.getID()); 
+            System.out.println("Type: "+ conRoom.getTType()); 
+            System.out.println("Beds: "+ conRoom.getBeds()); 
+                      
+        }
+    }
      
     public void exitAction(){
        this.dispose();
@@ -235,9 +285,19 @@ public class MainMenu extends javax.swing.JFrame {
 
         jButtonBooking.setText("BOOKING");
         jButtonBooking.setEnabled(false);
+        jButtonBooking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBookingActionPerformed(evt);
+            }
+        });
 
         jButtonRoom.setText("ROOM");
         jButtonRoom.setEnabled(false);
+        jButtonRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRoomActionPerformed(evt);
+            }
+        });
 
         jButtonPayment.setText("PAYMENT");
         jButtonPayment.setEnabled(false);
@@ -362,6 +422,14 @@ public class MainMenu extends javax.swing.JFrame {
     private void jButtonClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientActionPerformed
         connectClientAction();
     }//GEN-LAST:event_jButtonClientActionPerformed
+
+    private void jButtonBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBookingActionPerformed
+        connectBookingAction();
+    }//GEN-LAST:event_jButtonBookingActionPerformed
+
+    private void jButtonRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRoomActionPerformed
+        connectRoomAction();
+    }//GEN-LAST:event_jButtonRoomActionPerformed
 
     /**
      * @param args the command line arguments

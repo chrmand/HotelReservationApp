@@ -5,17 +5,20 @@
  */
 package hotelreservationapp;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
  * @author Χρήστος
  */
-public class JDialogClient extends javax.swing.JDialog {
+public class JDialogClient extends javax.swing.JDialog  {
     
     private boolean userChoosedOkFlag;
 
@@ -55,7 +58,7 @@ public class JDialogClient extends javax.swing.JDialog {
     public void updateClientAction() {
         
         String query="UPDATE CLIENT " +
-                " SET cAFM="+jTextFieldAFM.getText()+","+
+                " SET cFirstname='"+jTextFieldFirstname.getText()+"',"+
                 "     cLastname='"+jTextFieldLastname.getText()+"',"+
                 "     cPhone="+jTextFieldPhone.getText()+","+
                 "     cCountry='"+jTextFieldCountry.getText()+"',"+
@@ -63,7 +66,7 @@ public class JDialogClient extends javax.swing.JDialog {
                 "     cStreet='"+jTextFieldStreet.getText()+"',"+
                 "     cNum="+jTextFieldNumber.getText()+","+
                 "     cTK="+jTextFieldTK.getText()+" "+
-                " WHERE cFirstname='"+jTextFieldFirstname.getText()+"' ";
+                " WHERE  cAFM="+jTextFieldAFM.getText()+"";
         
         
         System.out.println("Query: \t" + query);
@@ -104,7 +107,7 @@ public class JDialogClient extends javax.swing.JDialog {
         clearTable( (DefaultTableModel)jTableClient.getModel() );
         String query = "SELECT cAFM, cFirstname, cLastname, cPhone, cCountry, cCity, cStreet, cNum, cTK"
                 + " FROM CLIENT "
-                + " ORDER BY cAFM, cFirstname" ;
+                + " ORDER BY cAFM, cCountry" ;
         System.out.println("Query: \t" + query);
         
         Statement searchStatement;
@@ -119,7 +122,7 @@ public class JDialogClient extends javax.swing.JDialog {
                 String lastname = searchRS.getString("cLastname");
                 String phone = searchRS.getString("cPhone");
                 String country = searchRS.getString("cCountry");
-                String city= searchRS.getString("cCity");
+                String city = searchRS.getString("cCity");
                 String street = searchRS.getString("cStreet");
                 String number = searchRS.getString("cNum");
                 String tk = searchRS.getString("cTK");
@@ -127,7 +130,7 @@ public class JDialogClient extends javax.swing.JDialog {
                 
                 DefaultTableModel model = (DefaultTableModel)jTableClient.getModel();
                 model.addRow(
-                    new Object [] {afm,firstname,lastname,phone,city,country,street,number,tk}
+                    new Object [] {afm,firstname,lastname,phone,country,city,street,number,tk}
                 );
                 
             }
@@ -220,6 +223,8 @@ public class JDialogClient extends javax.swing.JDialog {
             }    
     }
     
+    
+ 
     /*Geters*/
     public String getAFM() {
         return this.jTextFieldAFM.getText();
@@ -296,6 +301,7 @@ public class JDialogClient extends javax.swing.JDialog {
         jTextFieldStreet = new javax.swing.JTextField();
         jTextFieldNumber = new javax.swing.JTextField();
         jTextFieldTK = new javax.swing.JTextField();
+        jLabelPhoneError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Client Form");
@@ -411,7 +417,7 @@ public class JDialogClient extends javax.swing.JDialog {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -456,6 +462,8 @@ public class JDialogClient extends javax.swing.JDialog {
             }
         });
 
+        jLabelPhoneError.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -466,27 +474,35 @@ public class JDialogClient extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelCountry)
-                    .addComponent(jLabelPhone)
-                    .addComponent(jLabelCity)
-                    .addComponent(jLabelAFM)
-                    .addComponent(jLabelLastname)
-                    .addComponent(jLabelFirstname)
-                    .addComponent(jLabelStreet)
-                    .addComponent(jLabelTK)
-                    .addComponent(jLabelNumber))
-                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFieldFirstname)
-                    .addComponent(jTextFieldLastname)
-                    .addComponent(jTextFieldAFM)
-                    .addComponent(jTextFieldCity)
-                    .addComponent(jTextFieldPhone)
-                    .addComponent(jTextFieldCountry, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(jTextFieldStreet)
-                    .addComponent(jTextFieldNumber)
-                    .addComponent(jTextFieldTK))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelLastname)
+                            .addComponent(jLabelFirstname))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldFirstname, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                            .addComponent(jTextFieldLastname)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCountry)
+                            .addComponent(jLabelPhone)
+                            .addComponent(jLabelCity)
+                            .addComponent(jLabelStreet)
+                            .addComponent(jLabelTK)
+                            .addComponent(jLabelNumber)
+                            .addComponent(jLabelAFM))
+                        .addGap(58, 58, 58)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelPhoneError)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextFieldAFM)
+                                .addComponent(jTextFieldCity)
+                                .addComponent(jTextFieldPhone)
+                                .addComponent(jTextFieldCountry, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                                .addComponent(jTextFieldStreet)
+                                .addComponent(jTextFieldNumber)
+                                .addComponent(jTextFieldTK)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -506,14 +522,11 @@ public class JDialogClient extends javax.swing.JDialog {
                 .addComponent(jLabelClient)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jButtonInsert)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonUpdate)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonDelete))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelAFM)
+                            .addComponent(jTextFieldAFM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelFirstname)
                             .addComponent(jTextFieldFirstname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -523,38 +536,44 @@ public class JDialogClient extends javax.swing.JDialog {
                             .addComponent(jTextFieldLastname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelAFM)
-                            .addComponent(jTextFieldAFM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelPhone)
                             .addComponent(jTextFieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelPhoneError)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelCountry)
                             .addComponent(jTextFieldCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelCity)
-                            .addComponent(jTextFieldCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonReset))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextFieldStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelStreet))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabelNumber)
+                                    .addComponent(jTextFieldNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabelTK)
+                                    .addComponent(jTextFieldTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(38, 38, 38))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonReset))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldStreet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelStreet))
+                        .addGap(40, 40, 40)
+                        .addComponent(jButtonInsert)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelNumber)
-                            .addComponent(jTextFieldNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelTK)
-                            .addComponent(jTextFieldTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(38, 38, 38)
+                        .addComponent(jButtonUpdate)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -687,6 +706,7 @@ public class JDialogClient extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelLastname;
     private javax.swing.JLabel jLabelNumber;
     private javax.swing.JLabel jLabelPhone;
+    private javax.swing.JLabel jLabelPhoneError;
     private javax.swing.JLabel jLabelStreet;
     private javax.swing.JLabel jLabelTK;
     private javax.swing.JScrollPane jScrollPane1;

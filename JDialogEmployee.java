@@ -111,7 +111,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
             while (searchRS.next()){
                 String afm = searchRS.getString("eAFM");
                 String firstname = searchRS.getString("eFirstname");
-                String lastname= searchRS.getString("eLastname");
+                String lastname = searchRS.getString("eLastname");
                 String hiredate = searchRS.getString(4);
                 String type = searchRS.getString("eType");
                 String managesStorageID = searchRS.getString("managesStorageID");
@@ -182,8 +182,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
             if( (jTextFieldFirstname.getText().length()>0)  &&
                 (jTextFieldLastname.getText().length()>0) &&
                 (jTextFieldHireDate.getText().length()>0) &&
-                (jTextFieldType.getText().length()>0)&&
-                (jTextFieldManagesStorageID.getText().length()>0) )    
+                (jTextFieldType.getText().length()>0) )    
             {
                 jButtonInsert.setEnabled(true);
                 jButtonUpdate.setEnabled(true);
