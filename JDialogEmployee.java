@@ -19,6 +19,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
 
     private boolean userChoosedOkFlag;
     
+    
     /**
      * Creates new form JDialogEmployee
      */
@@ -33,7 +34,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
      * Insert Action Button
      */
     public void insertEmployeeAction() {
-        String query = "INSERT INTO EMPLOYEE(eAFM, eFirstname, eLastname, eHireDate, eType, managesStorageID) VALUES("+jTextFieldAFM.getText()+", '" +jTextFieldFirstname.getText()+ "', '" +jTextFieldLastname.getText()+ "', TO_DATE('"+jTextFieldHireDate.getText()+"','DD/MM/YYYY'), '"+jTextFieldType.getText()+"', "+jTextFieldManagesStorageID.getText()+")";
+        String query = "INSERT INTO EMPLOYEE(eAFM, eFirstname, eLastname, eHireDate, eType, managesStorageID) VALUES("+jTextFieldAFM.getText()+", '" +jTextFieldFirstname.getText()+ "', '" +jTextFieldLastname.getText()+ "', TO_DATE('"+jTextFieldHireDate.getText()+"','DD/MM/YYYY'), '"+jComboBoxType.getSelectedItem()+"', "+jTextFieldManagesStorageID.getText()+")";
         System.out.println("Query: \t" + query);
         Statement insertStatement;
         
@@ -56,7 +57,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
                 " SET eFirstname='" +jTextFieldFirstname.getText()+ "',"+
                 "     eLastname='" +jTextFieldLastname.getText()+ "',"+
                 "     eHireDate=TO_DATE('"+jTextFieldHireDate.getText()+"','DD/MM/YYYY'),"+
-                "     eType='"+jTextFieldType.getText()+"',"+
+                "     eType='"+jComboBoxType.getSelectedItem()+"',"+
                 "     managesStorageID="+jTextFieldManagesStorageID.getText()+" "+
                 " WHERE eAFM="+jTextFieldAFM.getText()+" ";
         
@@ -154,7 +155,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
         jTextFieldFirstname.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 1));
         jTextFieldLastname.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 2));
         jTextFieldHireDate.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 3));
-        jTextFieldType.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 4));
+        jComboBoxType.getSelectedItem().equals(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 4));
         jTextFieldManagesStorageID.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 5));
     }
     
@@ -163,10 +164,12 @@ public class JDialogEmployee extends javax.swing.JDialog {
         jTextFieldFirstname.setText("");
         jTextFieldLastname.setText("");
         jTextFieldHireDate.setText("");
-        jTextFieldType.setText("");
-        jTextFieldManagesStorageID.setText("");
+        jComboBoxType.setSelectedItem("type");
+        jTextFieldManagesStorageID.setText("null");
+         
     }
     
+
     /**
      * 
      * Enabled or Disabled OK from textFields values
@@ -176,26 +179,43 @@ public class JDialogEmployee extends javax.swing.JDialog {
         jButtonUpdate.setEnabled(false);
         jButtonDelete.setEnabled(false);
         jButtonReset.setEnabled(false);
+        jTextFieldManagesStorageID.setEnabled(false);
+        
+        
         
         if(jTextFieldAFM.getText().length()>0) {
             jButtonDelete.setEnabled(true);
             if( (jTextFieldFirstname.getText().length()>0)  &&
                 (jTextFieldLastname.getText().length()>0) &&
                 (jTextFieldHireDate.getText().length()>0) &&
-                (jTextFieldType.getText().length()>0) )    
+                (jComboBoxType.getSelectedItem() == "A") )    
+           
             {
                 jButtonInsert.setEnabled(true);
                 jButtonUpdate.setEnabled(true);
-            }    
+                
+                jTextFieldManagesStorageID.setEnabled(true);
+            }
+            
+            if(jComboBoxType.getSelectedItem() == "type" || jComboBoxType.getSelectedItem() == "E")
+            {
+                jButtonInsert.setEnabled(true);
+                jButtonUpdate.setEnabled(true);
+                
+                jTextFieldManagesStorageID.setEnabled(false);
+            }
+          
         }
+         
             if( (jTextFieldFirstname.getText().length()>0)  ||
                 (jTextFieldLastname.getText().length()>0) ||
                 (jTextFieldHireDate.getText().length()>0) ||
-                (jTextFieldType.getText().length()>0) ||
-                (jTextFieldManagesStorageID.getText().length()>0) )
+                (jComboBoxType.getSelectedItem().toString().length()>0) )
             {
                 jButtonReset.setEnabled(true);
-            }    
+            } 
+            
+            
     }
     
     /*Geters*/
@@ -216,7 +236,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
     }
     
     public String getEType() {
-        return this.jTextFieldType.getText();
+        return (String) this.jComboBoxType.getSelectedItem();
     }
 
     public String getManagesStorageID() {
@@ -255,7 +275,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
         jLabelHireDate = new javax.swing.JLabel();
         jTextFieldHireDate = new javax.swing.JTextField();
         jLabelType = new javax.swing.JLabel();
-        jTextFieldType = new javax.swing.JTextField();
+        jComboBoxType = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Employee Form");
@@ -383,11 +403,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
         jLabelType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelType.setText("Type");
 
-        jTextFieldType.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                jTextFieldTypeCaretUpdate(evt);
-            }
-        });
+        jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "type", "A", "E" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -408,7 +424,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelFirstname)
                                 .addGap(55, 55, 55)
-                                .addComponent(jTextFieldFirstname, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                                .addComponent(jTextFieldFirstname))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelLastname)
                                 .addGap(55, 55, 55)
@@ -428,7 +444,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
                                 .addGap(58, 58, 58)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextFieldHireDate, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldType))))
+                                    .addComponent(jComboBoxType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButtonUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -466,7 +482,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelType)
-                            .addComponent(jTextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelManagesStorage)
@@ -533,10 +549,6 @@ public class JDialogEmployee extends javax.swing.JDialog {
         okEnableCheckAction();
     }//GEN-LAST:event_jTextFieldHireDateCaretUpdate
 
-    private void jTextFieldTypeCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldTypeCaretUpdate
-        okEnableCheckAction();
-    }//GEN-LAST:event_jTextFieldTypeCaretUpdate
-
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         loadEmployee();
         employeeTableMouseClickedAction();
@@ -589,6 +601,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
     private javax.swing.JButton jButtonInsert;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonUpdate;
+    private javax.swing.JComboBox<String> jComboBoxType;
     private javax.swing.JLabel jLabelAFM;
     private javax.swing.JLabel jLabelEmployee;
     private javax.swing.JLabel jLabelFirstname;
@@ -603,6 +616,5 @@ public class JDialogEmployee extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldHireDate;
     private javax.swing.JTextField jTextFieldLastname;
     private javax.swing.JTextField jTextFieldManagesStorageID;
-    private javax.swing.JTextField jTextFieldType;
     // End of variables declaration//GEN-END:variables
 }

@@ -51,7 +51,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabelFirstname" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                              <Component id="jTextFieldFirstname" pref="102" max="32767" attributes="0"/>
+                              <Component id="jTextFieldFirstname" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabelLastname" min="-2" max="-2" attributes="0"/>
@@ -75,8 +75,8 @@
                               </Group>
                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jTextFieldHireDate" alignment="0" pref="102" max="32767" attributes="0"/>
-                                  <Component id="jTextFieldType" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldHireDate" pref="102" max="32767" attributes="0"/>
+                                  <Component id="jComboBoxType" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -126,7 +126,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabelType" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldType" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxType" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -326,10 +326,19 @@
         <Property name="text" type="java.lang.String" value="Type"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldType">
-      <Events>
-        <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="jTextFieldTypeCaretUpdate"/>
-      </Events>
+    <Component class="javax.swing.JComboBox" name="jComboBoxType">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="type"/>
+            <StringItem index="1" value="A"/>
+            <StringItem index="2" value="E"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
