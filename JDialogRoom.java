@@ -361,9 +361,20 @@ public class JDialogRoom extends javax.swing.JDialog {
         });
 
         jComboBoxBeds.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+        jComboBoxBeds.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxBedsActionPerformed(evt);
+            }
+        });
 
         jLabelPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelPrice.setText("Price");
+
+        jTextFieldPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPriceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -479,8 +490,16 @@ public class JDialogRoom extends javax.swing.JDialog {
     }//GEN-LAST:event_formComponentShown
 
     private void jComboBoxTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTypeActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jComboBoxTypeActionPerformed
+
+    private void jComboBoxBedsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxBedsActionPerformed
+       
+    }//GEN-LAST:event_jComboBoxBedsActionPerformed
+
+    private void jTextFieldPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPriceActionPerformed
 
     /**
      * @param args the command line arguments
