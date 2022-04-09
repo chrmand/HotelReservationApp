@@ -34,7 +34,7 @@ public class JDialogRoom extends javax.swing.JDialog {
      * Insert Action Button
      */
     public void insertRoomAction() {
-        String query = "INSERT INTO ROOM(rID, rType, rBeds, rStatus) VALUES(" +jTextFieldID.getText()+ ", '"+jComboBoxType.getSelectedItem()+"', "+jComboBoxBeds.getSelectedItem()+", 'Not Booked' )";
+        String query = "INSERT INTO ROOM(rID, rType, rBeds, rPrice, rStatus) VALUES(" +jTextFieldID.getText()+ ", '"+jComboBoxType.getSelectedItem()+"', "+jComboBoxBeds.getSelectedItem()+", '"+jTextFieldPrice.getText()+"','Not Booked' )";
         System.out.println("Query: \t" + query);
         Statement insertStatement;
         
@@ -57,7 +57,8 @@ public class JDialogRoom extends javax.swing.JDialog {
         
         String query="UPDATE ROOM " +
                 " SET rType='"+jComboBoxType.getSelectedItem()+"',"+
-                "     rBeds="+jComboBoxBeds.getSelectedItem()+", "+ 
+                "     rBeds="+jComboBoxBeds.getSelectedItem()+", "+
+                "     rPrice='"+jTextFieldPrice.getText()+"', "+ 
                 "     rStatus= 'Not Booked' "+ 
                 " WHERE  rID="+jTextFieldID.getText()+" ";
         
@@ -99,7 +100,7 @@ public class JDialogRoom extends javax.swing.JDialog {
      */
     public void loadRoom() {
         clearTable( (DefaultTableModel)jTableRoom.getModel() );
-        String query = "SELECT rID, rType, rBeds, rStatus"
+        String query = "SELECT rID, rType, rBeds, rPrice, rStatus"
                 + " FROM ROOM "
                 + " ORDER BY rID, rType, rStatus" ;
         System.out.println("Query: \t" + query);
@@ -114,13 +115,14 @@ public class JDialogRoom extends javax.swing.JDialog {
                 String ID = searchRS.getString("rID");
                 String type = searchRS.getString("rType");
                 String beds = searchRS.getString("rBeds");
+                String price = searchRS.getString("rPrice");
                 String status = searchRS.getString("rStatus");
                 
                 
                 
                 DefaultTableModel model = (DefaultTableModel)jTableRoom.getModel();
                 model.addRow(
-                    new Object [] {ID,type,beds,status}
+                    new Object [] {ID,type,beds,price,status}
                 );
                 
             }
@@ -154,6 +156,8 @@ public class JDialogRoom extends javax.swing.JDialog {
         jTextFieldID.setText(""+jTableRoom.getModel().getValueAt(jTableRoom.getSelectedRow(), 0));
         jComboBoxType.equals(""+jTableRoom.getModel().getValueAt(jTableRoom.getSelectedRow(), 1));
         jComboBoxBeds.equals(""+jTableRoom.getModel().getValueAt(jTableRoom.getSelectedRow(), 2));
+        jTextFieldPrice.setText(""+jTableRoom.getModel().getValueAt(jTableRoom.getSelectedRow(), 3));
+        
         
        
     }
@@ -162,6 +166,7 @@ public class JDialogRoom extends javax.swing.JDialog {
         jTextFieldID.setText("");
         jComboBoxType.equals("");
         jComboBoxBeds.equals("");
+        jTextFieldPrice.setText("");
         
     }
     
@@ -180,7 +185,8 @@ public class JDialogRoom extends javax.swing.JDialog {
             jButtonDelete.setEnabled(true);
             if( (jComboBoxType.getSelectedItem().equals("Monoklino") == (jComboBoxBeds.getSelectedItem().equals("1")) )  &&
                 (jComboBoxType.getSelectedItem().equals("Diklino") == (jComboBoxBeds.getSelectedItem().equals("2")) )  &&
-                (jComboBoxType.getSelectedItem().equals("Triklino") == (jComboBoxBeds.getSelectedItem().equals("3")) )  
+                (jComboBoxType.getSelectedItem().equals("Triklino") == (jComboBoxBeds.getSelectedItem().equals("3")) &&
+                (jTextFieldPrice.getText().length()>0) )  
                 
               )    
             {
@@ -190,7 +196,8 @@ public class JDialogRoom extends javax.swing.JDialog {
         }
             if( (jComboBoxType.getSelectedItem().equals("Monoklino") == (jComboBoxBeds.getSelectedItem().equals("1")) )  ||
                 (jComboBoxType.getSelectedItem().equals("Diklino") == (jComboBoxBeds.getSelectedItem().equals("2")) )  ||
-                (jComboBoxType.getSelectedItem().equals("Triklino") == (jComboBoxBeds.getSelectedItem().equals("3")) )  
+                (jComboBoxType.getSelectedItem().equals("Triklino") == (jComboBoxBeds.getSelectedItem().equals("3")) ||
+                (jTextFieldPrice.getText().length()>0) )    
               )    
             {
                 jButtonReset.setEnabled(true);
@@ -210,6 +217,10 @@ public class JDialogRoom extends javax.swing.JDialog {
     
     public String getBeds() {
         return (String) this.jComboBoxBeds.getSelectedItem();
+    }
+    
+    public String getPrice() {
+        return this.jTextFieldPrice.getText();
     }
 
     public boolean getUserChoosedOkFlag() {
@@ -239,6 +250,8 @@ public class JDialogRoom extends javax.swing.JDialog {
         jButtonDelete = new javax.swing.JButton();
         jComboBoxType = new javax.swing.JComboBox<>();
         jComboBoxBeds = new javax.swing.JComboBox<>();
+        jLabelPrice = new javax.swing.JLabel();
+        jTextFieldPrice = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Room Form");
@@ -291,14 +304,14 @@ public class JDialogRoom extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Type", "Beds", "Status"
+                "ID", "Type", "Beds", "Price", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -320,6 +333,7 @@ public class JDialogRoom extends javax.swing.JDialog {
             jTableRoom.getColumnModel().getColumn(1).setResizable(false);
             jTableRoom.getColumnModel().getColumn(2).setResizable(false);
             jTableRoom.getColumnModel().getColumn(3).setResizable(false);
+            jTableRoom.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jButtonReset.setText("Reset");
@@ -348,25 +362,34 @@ public class JDialogRoom extends javax.swing.JDialog {
 
         jComboBoxBeds.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
 
+        jLabelPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelPrice.setText("Price");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelBooking)
+                .addGap(261, 261, 261))
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelBeds)
                     .addComponent(jLabelType)
-                    .addComponent(jLabelID))
+                    .addComponent(jLabelID)
+                    .addComponent(jLabelPrice))
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTextFieldID, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                     .addComponent(jComboBoxType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxBeds, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBoxBeds, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldPrice))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -374,10 +397,6 @@ public class JDialogRoom extends javax.swing.JDialog {
                     .addComponent(jButtonDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(31, 31, 31))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelBooking)
-                .addGap(261, 261, 261))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,7 +426,11 @@ public class JDialogRoom extends javax.swing.JDialog {
                         .addComponent(jButtonUpdate)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonDelete)))
-                .addGap(50, 50, 50)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelPrice)
+                    .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
                 .addComponent(jButtonReset)
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -511,9 +534,11 @@ public class JDialogRoom extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelBeds;
     private javax.swing.JLabel jLabelBooking;
     private javax.swing.JLabel jLabelID;
+    private javax.swing.JLabel jLabelPrice;
     private javax.swing.JLabel jLabelType;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableRoom;
     private javax.swing.JTextField jTextFieldID;
+    private javax.swing.JTextField jTextFieldPrice;
     // End of variables declaration//GEN-END:variables
 }

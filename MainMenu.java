@@ -71,11 +71,12 @@ public class MainMenu extends javax.swing.JFrame {
             
         }  
        
-         /*   
+            /*
         
             JDialogLogin login = new JDialogLogin(this, true);
             login.setVisible(true);
-        */
+        
+            */
             
          
     } 
@@ -226,6 +227,7 @@ public class MainMenu extends javax.swing.JFrame {
             System.out.println("ID: "+ conRoom.getID()); 
             System.out.println("Type: "+ conRoom.getTType()); 
             System.out.println("Beds: "+ conRoom.getBeds()); 
+             System.out.println("Price: "+ conRoom.getPrice()); 
             
                       
         }

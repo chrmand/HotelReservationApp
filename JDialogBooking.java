@@ -8,6 +8,8 @@ package hotelreservationapp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,6 +29,7 @@ public class JDialogBooking extends javax.swing.JDialog {
         initComponents();
         
         userChoosedOkFlag=false;
+             
     }
     
     /**
@@ -174,6 +177,11 @@ public class JDialogBooking extends javax.swing.JDialog {
         jComboBoxRoomID.setSelectedItem("ID");
         jTextFieldClientsAFM.setText("");
         
+        
+        SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/YYYY");
+        Calendar cal = Calendar.getInstance();
+        jTextFieldCheckIN.setText(myFormat.format(cal.getTime()));
+        
     }
     
     
@@ -273,7 +281,7 @@ public class JDialogBooking extends javax.swing.JDialog {
         jLabelPersons = new javax.swing.JLabel();
         jButtonDelete = new javax.swing.JButton();
         jButtonInsert = new javax.swing.JButton();
-        jButtonCHECKOUT = new javax.swing.JButton();
+        jButtonPayment = new javax.swing.JButton();
         jLabelClientsAFM = new javax.swing.JLabel();
         jTextFieldClientsAFM = new javax.swing.JTextField();
         jComboBoxRoomID = new javax.swing.JComboBox<>();
@@ -403,10 +411,10 @@ public class JDialogBooking extends javax.swing.JDialog {
             }
         });
 
-        jButtonCHECKOUT.setText("CHECK OUT");
-        jButtonCHECKOUT.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPayment.setText("PAYMENT");
+        jButtonPayment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCHECKOUTActionPerformed(evt);
+                jButtonPaymentActionPerformed(evt);
             }
         });
 
@@ -456,7 +464,7 @@ public class JDialogBooking extends javax.swing.JDialog {
                             .addComponent(jLabelRoomID)
                             .addComponent(jLabelClientsAFM))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonCHECKOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -502,7 +510,7 @@ public class JDialogBooking extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelRoomID)
-                            .addComponent(jButtonCHECKOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonUpdate)
@@ -576,10 +584,10 @@ public class JDialogBooking extends javax.swing.JDialog {
         bookingTableMouseClickedAction();
     }//GEN-LAST:event_formComponentShown
 
-    private void jButtonCHECKOUTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCHECKOUTActionPerformed
+    private void jButtonPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPaymentActionPerformed
         JDialogReserve reserve = new JDialogReserve(null, true);
             reserve.setVisible(true);
-    }//GEN-LAST:event_jButtonCHECKOUTActionPerformed
+    }//GEN-LAST:event_jButtonPaymentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -624,9 +632,9 @@ public class JDialogBooking extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonCHECKOUT;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonInsert;
+    private javax.swing.JButton jButtonPayment;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonUpdate;
     private javax.swing.JComboBox<String> jComboBoxRoomID;
