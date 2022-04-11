@@ -100,7 +100,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
         clearTable( (DefaultTableModel)jTableEmployee.getModel() );
         String query = "SELECT eAFM, eFirstname, eLastname, TO_CHAR(eHireDate, 'DD/MM/YYYY'), eType, managesStorageID"
                 + " FROM EMPLOYEE "
-                + " ORDER BY eAFM, eFirstname" ;
+                + " ORDER BY eHireDate" ;
         System.out.println("Query: \t" + query);
         
         Statement searchStatement;
@@ -157,6 +157,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
         jTextFieldHireDate.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 3));
         jComboBoxType.getSelectedItem().equals(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 4));
         jTextFieldManagesStorageID.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 5));
+      
     }
     
     public void resetAction(){
@@ -187,22 +188,36 @@ public class JDialogEmployee extends javax.swing.JDialog {
             jButtonDelete.setEnabled(true);
             if( (jTextFieldFirstname.getText().length()>0)  &&
                 (jTextFieldLastname.getText().length()>0) &&
-                (jTextFieldHireDate.getText().length()>0) &&
-                (jComboBoxType.getSelectedItem() == "A") )    
+                (jTextFieldHireDate.getText().length()>0) )    
            
+            {
+                
+                jButtonInsert.setEnabled(true);
+                jButtonUpdate.setEnabled(true);
+                
+               
+            }
+            
+            if(jComboBoxType.getSelectedItem() == "A")
             {
                 jButtonInsert.setEnabled(true);
                 jButtonUpdate.setEnabled(true);
                 
                 jTextFieldManagesStorageID.setEnabled(true);
+                
+                //jTextFieldManagesStorageID.requestFocus(true);
+                 
             }
-            
+           
             if(jComboBoxType.getSelectedItem() == "type" || jComboBoxType.getSelectedItem() == "E")
             {
+                
                 jButtonInsert.setEnabled(true);
                 jButtonUpdate.setEnabled(true);
                 
                 jTextFieldManagesStorageID.setEnabled(false);
+                
+ 
             }
           
         }
@@ -217,6 +232,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
             
             
     }
+    
     
     /*Geters*/
     public String getFirstname() {

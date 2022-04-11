@@ -164,8 +164,8 @@ public class JDialogRoom extends javax.swing.JDialog {
     
     public void resetAction(){
         jTextFieldID.setText("");
-        jComboBoxType.equals("");
-        jComboBoxBeds.equals("");
+        jComboBoxType.setSelectedIndex(-1);
+        jComboBoxBeds.setSelectedIndex(-1);
         jTextFieldPrice.setText("");
         
     }

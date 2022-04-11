@@ -37,7 +37,7 @@ public class JDialogBooking extends javax.swing.JDialog {
      * Insert Action Button
      */
     public void insertBookingAction() {
-        String query = "INSERT INTO BOOKING(bID, bCheckIN, bCheckOUT, bPersons, bNumOfDays, roomID, clientAFM) VALUES(" +jTextFieldID.getText()+ ", TO_DATE('"+jTextFieldCheckIN.getText()+"','DD/MM/YYYY'), TO_DATE('"+jTextFieldCheckOUT.getText()+"','DD/MM/YYYY'), "+jTextFieldPersons.getText()+", "+jTextFieldNumOfDays.getText()+", "+jComboBoxRoomID.getSelectedItem()+", "+jTextFieldClientsAFM.getText()+")";
+        String query = "INSERT INTO BOOKING(bID, bCheckIN, bCheckOUT, bPersons, bNumOfDays, roomID, clientAFM) VALUES(" +jTextFieldBookingID.getText()+ ", TO_DATE('"+jTextFieldCheckIN.getText()+"','DD/MM/YYYY'), TO_DATE('"+jTextFieldCheckOUT.getText()+"','DD/MM/YYYY'), "+jTextFieldPersons.getText()+", "+jTextFieldNumOfDays.getText()+", "+jComboBoxRoomID.getSelectedItem()+", "+jTextFieldClientsAFM.getText()+")";
         System.out.println("Query: \t" + query);
         Statement insertStatement;
         
@@ -49,6 +49,7 @@ public class JDialogBooking extends javax.swing.JDialog {
         catch (SQLException ex) {
             showMessageDialog(this, ex.getMessage()); 
         }
+        
     }
     
            
@@ -65,7 +66,7 @@ public class JDialogBooking extends javax.swing.JDialog {
                 "     bNumOfDays="+jTextFieldNumOfDays.getText()+","+
                 "     roomID="+jComboBoxRoomID.getSelectedItem()+","+
                 "     clientAFM="+jTextFieldClientsAFM.getText()+""+
-                " WHERE  bID="+jTextFieldID.getText()+"";
+                " WHERE  bID="+jTextFieldBookingID.getText()+"";
         
         
         System.out.println("Query: \t" + query);
@@ -79,13 +80,14 @@ public class JDialogBooking extends javax.swing.JDialog {
         catch (SQLException ex) {
             showMessageDialog(this, ex.getMessage()); 
         }
+
     }
     
     /**
      * Delete Action Button
      */
     public void deleteBookingAction() {
-        String query = "DELETE BOOKING WHERE bID="+jTextFieldID.getText()+" ";
+        String query = "DELETE BOOKING WHERE bID="+jTextFieldBookingID.getText()+" ";
         System.out.println("Query: \t" + query);
         Statement deleteStatement;
         
@@ -159,25 +161,29 @@ public class JDialogBooking extends javax.swing.JDialog {
     
     
      public void bookingTableMouseClickedAction(){
-        jTextFieldID.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 0));
+        jTextFieldBookingID.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 0));
         jTextFieldCheckIN.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 1));
         jTextFieldCheckOUT.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 2));
         jTextFieldPersons.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 3));
         jTextFieldNumOfDays.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 4));
         jComboBoxRoomID.getSelectedItem().equals(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 5));
         jTextFieldClientsAFM.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 6));
+        
        
     }
    
     public void resetAction(){
-        jTextFieldID.setText("");
+        jTextFieldBookingID.setText("");
         jTextFieldCheckIN.setText("");
         jTextFieldCheckOUT.setText("");
         jTextFieldPersons.setText("");
         jTextFieldNumOfDays.setText("");
-        //jComboBoxRoomID.setSelectedItem("ID");
         jTextFieldClientsAFM.setText("");
+       
         
+        jComboBoxType.setSelectedIndex(0);
+        jComboBoxBeds.setSelectedIndex(0);
+                
         jTextFieldPrice.setText("");
         
         
@@ -192,7 +198,9 @@ public class JDialogBooking extends javax.swing.JDialog {
     public void roomDetails(){
 
         jComboBoxRoomID.removeAllItems();
-
+        
+      
+        jComboBoxBeds.setSelectedIndex(0);
         jTextFieldPrice.setText("");
        
         
@@ -214,9 +222,7 @@ public class JDialogBooking extends javax.swing.JDialog {
         while(rs.next()){
             
                 jComboBoxRoomID.addItem(rs.getString(1));
-                
-               
-
+              
         }
         
         }
@@ -226,7 +232,8 @@ public class JDialogBooking extends javax.swing.JDialog {
         }
         
     }
-
+    
+   
     
     
 /**
@@ -239,7 +246,7 @@ public class JDialogBooking extends javax.swing.JDialog {
         jButtonDelete.setEnabled(false);
         jButtonReset.setEnabled(false);
         
-        if(jTextFieldID.getText().length()>0) {
+        if(jTextFieldBookingID.getText().length()>0) {
             jButtonDelete.setEnabled(true);
             if( (jTextFieldCheckIN.getText().length()>0)  &&
                 (jTextFieldCheckOUT.getText().length()>0)  &&
@@ -267,7 +274,7 @@ public class JDialogBooking extends javax.swing.JDialog {
     
     /*Geters*/
     public String getID() {
-        return this.jTextFieldID.getText();
+        return this.jTextFieldBookingID.getText();
     }
     
     public String getCheckIN() {
@@ -290,6 +297,14 @@ public class JDialogBooking extends javax.swing.JDialog {
         return (String) this.jComboBoxRoomID.getSelectedItem();
     }
     
+    public String getTType() {
+        return (String) this.jComboBoxType.getSelectedItem();
+    }
+    
+    public String getBeds() {
+        return (String) this.jComboBoxBeds.getSelectedItem();
+    }
+    
     public String getClientsAFM() {
         return this.jTextFieldClientsAFM.getText();
     }
@@ -310,7 +325,7 @@ public class JDialogBooking extends javax.swing.JDialog {
 
         jLabelRoomID = new javax.swing.JLabel();
         jTextFieldPersons = new javax.swing.JTextField();
-        jTextFieldID = new javax.swing.JTextField();
+        jTextFieldBookingID = new javax.swing.JTextField();
         jLabelCheckOUT = new javax.swing.JLabel();
         jLabelCheckIN = new javax.swing.JLabel();
         jLabelNumberOfDays = new javax.swing.JLabel();
@@ -320,7 +335,7 @@ public class JDialogBooking extends javax.swing.JDialog {
         jTextFieldNumOfDays = new javax.swing.JTextField();
         jTextFieldCheckOUT = new javax.swing.JTextField();
         jButtonUpdate = new javax.swing.JButton();
-        jLabelID = new javax.swing.JLabel();
+        jLabelBookingID = new javax.swing.JLabel();
         jTextFieldCheckIN = new javax.swing.JTextField();
         jLabelBooking = new javax.swing.JLabel();
         jLabelPersons = new javax.swing.JLabel();
@@ -356,9 +371,9 @@ public class JDialogBooking extends javax.swing.JDialog {
             }
         });
 
-        jTextFieldID.addCaretListener(new javax.swing.event.CaretListener() {
+        jTextFieldBookingID.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                jTextFieldIDCaretUpdate(evt);
+                jTextFieldBookingIDCaretUpdate(evt);
             }
         });
 
@@ -427,8 +442,8 @@ public class JDialogBooking extends javax.swing.JDialog {
             }
         });
 
-        jLabelID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelID.setText("ID");
+        jLabelBookingID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelBookingID.setText("Booking ID");
 
         jTextFieldCheckIN.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -479,13 +494,14 @@ public class JDialogBooking extends javax.swing.JDialog {
             }
         });
 
-        jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monoklino", "Diklino", "Triklino" }));
+        jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "type", "Monoklino", "Diklino", "Triklino" }));
         jComboBoxType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxTypeActionPerformed(evt);
             }
         });
 
+        jComboBoxBeds.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "beds", "1", "2", "3" }));
         jComboBoxBeds.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxBedsActionPerformed(evt);
@@ -516,129 +532,134 @@ public class JDialogBooking extends javax.swing.JDialog {
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(361, 361, 361)
+                .addComponent(jLabelBooking)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelBeds)
-                            .addComponent(jLabelType)
-                            .addComponent(jLabelPrice))
-                        .addGap(74, 74, 74)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBoxType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxBeds, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelNumberOfDays)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(115, 115, 115)
+                                .addComponent(jTextFieldNumOfDays, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelPersons)
-                                            .addComponent(jLabelID))
-                                        .addGap(67, 67, 67)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextFieldPersons, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextFieldNumOfDays, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextFieldClientsAFM, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboBoxRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(57, 57, 57))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelCheckOUT)
-                                            .addComponent(jLabelCheckIN))
-                                        .addGap(50, 50, 50)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldCheckIN)
-                                            .addComponent(jTextFieldCheckOUT))))
-                                .addGap(119, 119, 119)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(105, 394, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jButtonUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButtonInsert, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButtonDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabelBooking)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(jLabelCheckOUT)
+                                    .addComponent(jLabelCheckIN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldCheckIN, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldCheckOUT)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelBookingID)
+                                .addGap(50, 50, 50)
+                                .addComponent(jTextFieldBookingID, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelPersons)
+                                .addGap(67, 67, 67)
+                                .addComponent(jTextFieldPersons, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelNumberOfDays)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabelType)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(jLabelBeds))
                                     .addComponent(jLabelRoomID)
-                                    .addComponent(jLabelClientsAFM))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(115, 115, 115)
+                                        .addComponent(jComboBoxRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelClientsAFM)
+                                    .addComponent(jComboBoxBeds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addComponent(jTextFieldClientsAFM, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabelPrice)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 374, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButtonUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonInsert, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(31, 31, 31))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(jButtonInsert))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabelBooking)
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelID)
-                            .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonUpdate)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonDelete))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelCheckIN)
-                            .addComponent(jTextFieldCheckIN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelCheckOUT)
-                            .addComponent(jTextFieldCheckOUT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelPersons)
-                            .addComponent(jTextFieldPersons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelNumberOfDays)
-                            .addComponent(jTextFieldNumOfDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelRoomID)
-                            .addComponent(jComboBoxRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldClientsAFM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelClientsAFM))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(21, 21, 21)
+                .addComponent(jLabelBooking)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonInsert)
                     .addComponent(jLabelType)
-                    .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelBeds)
-                    .addComponent(jComboBoxBeds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxBeds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelPrice)
                     .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addComponent(jButtonReset)
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonUpdate)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonDelete)
+                        .addGap(99, 99, 99)
+                        .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 13, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelRoomID)
+                            .addComponent(jComboBoxRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelClientsAFM)
+                            .addComponent(jTextFieldClientsAFM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelBookingID)
+                            .addComponent(jTextFieldBookingID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonReset)
+                                .addGap(26, 26, 26))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabelCheckIN)
+                                    .addComponent(jTextFieldCheckIN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabelCheckOUT)
+                                    .addComponent(jTextFieldCheckOUT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabelPersons)
+                                    .addComponent(jTextFieldPersons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabelNumberOfDays)
+                                    .addComponent(jTextFieldNumOfDays, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(104, 104, 104)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
         );
 
         pack();
@@ -648,9 +669,9 @@ public class JDialogBooking extends javax.swing.JDialog {
         okEnableCheckAction();
     }//GEN-LAST:event_jTextFieldPersonsCaretUpdate
 
-    private void jTextFieldIDCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldIDCaretUpdate
+    private void jTextFieldBookingIDCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldBookingIDCaretUpdate
         okEnableCheckAction();
-    }//GEN-LAST:event_jTextFieldIDCaretUpdate
+    }//GEN-LAST:event_jTextFieldBookingIDCaretUpdate
 
     private void jTableBookingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBookingMouseClicked
         bookingTableMouseClickedAction();
@@ -707,7 +728,7 @@ public class JDialogBooking extends javax.swing.JDialog {
     }//GEN-LAST:event_jComboBoxTypeActionPerformed
 
     private void jComboBoxBedsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxBedsActionPerformed
-        roomDetails();
+        
     }//GEN-LAST:event_jComboBoxBedsActionPerformed
 
     private void jTextFieldPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPriceActionPerformed
@@ -727,9 +748,10 @@ public class JDialogBooking extends javax.swing.JDialog {
             searchStatement = MainMenu.con.createStatement(java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, 
                                                              java.sql.ResultSet.CONCUR_READ_ONLY);
             searchRS = searchStatement.executeQuery(query);
-            while (searchRS.next()){
+            if(searchRS.next()){
                
                 jTextFieldPrice.setText(searchRS.getString("rPrice"));
+                jComboBoxBeds.setSelectedItem(searchRS.getString("rBeds"));
                 
             }
         }
@@ -791,10 +813,10 @@ public class JDialogBooking extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxType;
     private javax.swing.JLabel jLabelBeds;
     private javax.swing.JLabel jLabelBooking;
+    private javax.swing.JLabel jLabelBookingID;
     private javax.swing.JLabel jLabelCheckIN;
     private javax.swing.JLabel jLabelCheckOUT;
     private javax.swing.JLabel jLabelClientsAFM;
-    private javax.swing.JLabel jLabelID;
     private javax.swing.JLabel jLabelNumberOfDays;
     private javax.swing.JLabel jLabelPersons;
     private javax.swing.JLabel jLabelPrice;
@@ -802,10 +824,10 @@ public class JDialogBooking extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelType;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableBooking;
+    private javax.swing.JTextField jTextFieldBookingID;
     private javax.swing.JTextField jTextFieldCheckIN;
     private javax.swing.JTextField jTextFieldCheckOUT;
     private javax.swing.JTextField jTextFieldClientsAFM;
-    private javax.swing.JTextField jTextFieldID;
     private javax.swing.JTextField jTextFieldNumOfDays;
     private javax.swing.JTextField jTextFieldPersons;
     private javax.swing.JTextField jTextFieldPrice;
