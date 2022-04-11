@@ -10,3 +10,13 @@ SELECT * FROM REGISTER;
 SELECT * FROM RESERVE;
 
 
+
+--SELECT-- Μας εμφανίζει τον αριθμό κράτησης σε ποιο δωμάτιο ανήκει.
+SELECT BOOKING.bID, ROOM.rID
+FROM BOOKING
+FULL OUTER JOIN ROOM ON BOOKING.roomID=ROOM.rID
+ORDER BY BOOKING.bID;
+
+
+
+
