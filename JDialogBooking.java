@@ -160,15 +160,16 @@ public class JDialogBooking extends javax.swing.JDialog {
     }
     
     
-     public void bookingTableMouseClickedAction(){
+    public void bookingTableMouseClickedAction(){
         jTextFieldBookingID.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 0));
         jTextFieldCheckIN.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 1));
         jTextFieldCheckOUT.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 2));
         jTextFieldPersons.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 3));
         jTextFieldNumOfDays.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 4));
-        jComboBoxRoomID.getSelectedItem().equals(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 5));
+        //jComboBoxRoomID.getSelectedItem().equals(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 5));
         jTextFieldClientsAFM.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 6));
         
+       
        
     }
    
@@ -186,6 +187,12 @@ public class JDialogBooking extends javax.swing.JDialog {
                 
         jTextFieldPrice.setText("");
         
+
+        //when button reset clicked--> setText RoomID comboBox = ID         
+        String item = "ID";
+        jComboBoxRoomID.addItem(item);
+        jComboBoxRoomID.setSelectedIndex(0);
+        
         
         SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/YYYY");
         Calendar cal = Calendar.getInstance();
@@ -194,7 +201,11 @@ public class JDialogBooking extends javax.swing.JDialog {
     }
     
 
-    
+    /**
+     * 
+     * Παίρνει όλους τους αριθμούς των δωματίων και τους τοποθετεί στο comboBox ανάλογα από ποιον τύπο
+     * δωματίου ανήκουν.
+     */
     public void roomDetails(){
 
         jComboBoxRoomID.removeAllItems();
@@ -202,35 +213,32 @@ public class JDialogBooking extends javax.swing.JDialog {
       
         jComboBoxBeds.setSelectedIndex(0);
         jTextFieldPrice.setText("");
-       
         
-        try
-        {
+        
+        try {
             String query = " SELECT * FROM ROOM "
-                         + " WHERE rType = '"+(String)jComboBoxType.getSelectedItem()+"' "
-                         + " ORDER BY rID";
-                
-        System.out.println("Query: \t" + query);
-        
-        Statement searchStatement;
-        ResultSet rs;
-        
-        searchStatement = MainMenu.con.createStatement(java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                                                             java.sql.ResultSet.CONCUR_READ_ONLY);
+                    + " WHERE rType = '" + (String) jComboBoxType.getSelectedItem() + "' "
+                    + " ORDER BY rID";
+
+            System.out.println("Query: \t" + query);
+
+            Statement searchStatement;
+            ResultSet rs;
+
+            searchStatement = MainMenu.con.createStatement(java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    java.sql.ResultSet.CONCUR_READ_ONLY);
             rs = searchStatement.executeQuery(query);
-        
-        while(rs.next()){
-            
+
+            while (rs.next()) {
+
                 jComboBoxRoomID.addItem(rs.getString(1));
-              
+
+            }
+
+        } catch (Exception e) {
+
         }
-        
-        }
-        catch(Exception e)
-        {
-            
-        }
-        
+
     }
     
    
@@ -252,7 +260,6 @@ public class JDialogBooking extends javax.swing.JDialog {
                 (jTextFieldCheckOUT.getText().length()>0)  &&
                 (jTextFieldPersons.getText().length()>0)  &&
                 (jTextFieldNumOfDays.getText().length()>0)  &&
-                (jComboBoxRoomID.getSelectedItem().toString().length()>0)  &&
                 (jTextFieldClientsAFM.getText().length()>0) )    
             {
                 jButtonInsert.setEnabled(true);
@@ -263,7 +270,6 @@ public class JDialogBooking extends javax.swing.JDialog {
                 (jTextFieldCheckOUT.getText().length()>0)  ||
                 (jTextFieldPersons.getText().length()>0)  ||
                 (jTextFieldNumOfDays.getText().length()>0)  ||
-                (jComboBoxRoomID.getSelectedItem().toString().length()>0) ||
                 (jTextFieldClientsAFM.getText().length()>0) )    
             {
                 jButtonReset.setEnabled(true);
@@ -487,7 +493,7 @@ public class JDialogBooking extends javax.swing.JDialog {
         jLabelClientsAFM.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelClientsAFM.setText("Client's AFM");
 
-        jComboBoxRoomID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", " " }));
+        jComboBoxRoomID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID" }));
         jComboBoxRoomID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxRoomIDActionPerformed(evt);
@@ -502,11 +508,6 @@ public class JDialogBooking extends javax.swing.JDialog {
         });
 
         jComboBoxBeds.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "beds", "1", "2", "3" }));
-        jComboBoxBeds.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxBedsActionPerformed(evt);
-            }
-        });
 
         jLabelPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelPrice.setText("Price");
@@ -514,11 +515,7 @@ public class JDialogBooking extends javax.swing.JDialog {
         jLabelBeds.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelBeds.setText("Beds");
 
-        jTextFieldPrice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPriceActionPerformed(evt);
-            }
-        });
+        jTextFieldPrice.setEditable(false);
 
         jLabelType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelType.setText("Type");
@@ -579,22 +576,19 @@ public class JDialogBooking extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelClientsAFM)
                                     .addComponent(jComboBoxBeds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 457, Short.MAX_VALUE)
                                 .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldClientsAFM, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(14, 14, 14)
-                                        .addComponent(jTextFieldClientsAFM, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
                                         .addComponent(jLabelPrice)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 374, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 408, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButtonUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButtonInsert, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -726,14 +720,6 @@ public class JDialogBooking extends javax.swing.JDialog {
     private void jComboBoxTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTypeActionPerformed
         roomDetails();
     }//GEN-LAST:event_jComboBoxTypeActionPerformed
-
-    private void jComboBoxBedsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxBedsActionPerformed
-        
-    }//GEN-LAST:event_jComboBoxBedsActionPerformed
-
-    private void jTextFieldPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPriceActionPerformed
-        
-    }//GEN-LAST:event_jTextFieldPriceActionPerformed
 
     private void jComboBoxRoomIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxRoomIDActionPerformed
         

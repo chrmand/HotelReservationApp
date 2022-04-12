@@ -150,14 +150,32 @@ public class JDialogEmployee extends javax.swing.JDialog {
         }    
     }
     
+    /**
+     * 
+     * Εμφάνιση των δεδομένων από τα comboBox του Model του πίνακα όταν επιλέγουμε κάποια γραμμή.
+     */
+   public void comboBoxSelectGetValues(){
+       DefaultTableModel model = (DefaultTableModel) jTableEmployee.getModel();
+     
+       //jComboBoxType
+       String comboTypeSelect = model.getValueAt(jTableEmployee.getSelectedRow(), 4).toString();
+       for (int i = 0; i < jComboBoxType.getItemCount(); i++) {
+           if (jComboBoxType.getItemAt(i).equalsIgnoreCase(comboTypeSelect)) {
+               jComboBoxType.setSelectedIndex(i);
+           }
+       }
+   }
+    
     public void employeeTableMouseClickedAction(){
         jTextFieldAFM.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 0));
         jTextFieldFirstname.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 1));
         jTextFieldLastname.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 2));
         jTextFieldHireDate.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 3));
-        jComboBoxType.getSelectedItem().equals(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 4));
+        //jComboBoxType.getSelectedItem().equals(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 4));
         jTextFieldManagesStorageID.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 5));
       
+        comboBoxSelectGetValues();
+        
     }
     
     public void resetAction(){
@@ -180,7 +198,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
         jButtonUpdate.setEnabled(false);
         jButtonDelete.setEnabled(false);
         jButtonReset.setEnabled(false);
-        jTextFieldManagesStorageID.setEnabled(false);
+
         
         
         
@@ -188,26 +206,18 @@ public class JDialogEmployee extends javax.swing.JDialog {
             jButtonDelete.setEnabled(true);
             if( (jTextFieldFirstname.getText().length()>0)  &&
                 (jTextFieldLastname.getText().length()>0) &&
-                (jTextFieldHireDate.getText().length()>0) )    
+                (jTextFieldHireDate.getText().length()>0) &&
+                (jComboBoxType.getSelectedItem() == "A") )    
            
             {
                 
                 jButtonInsert.setEnabled(true);
                 jButtonUpdate.setEnabled(true);
                 
-               
+               jTextFieldManagesStorageID.setEnabled(true);
+              
             }
-            
-            if(jComboBoxType.getSelectedItem() == "A")
-            {
-                jButtonInsert.setEnabled(true);
-                jButtonUpdate.setEnabled(true);
-                
-                jTextFieldManagesStorageID.setEnabled(true);
-                
-                //jTextFieldManagesStorageID.requestFocus(true);
-                 
-            }
+    
            
             if(jComboBoxType.getSelectedItem() == "type" || jComboBoxType.getSelectedItem() == "E")
             {
@@ -219,7 +229,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
                 
  
             }
-          
+            
         }
          
             if( (jTextFieldFirstname.getText().length()>0)  ||

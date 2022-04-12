@@ -28,6 +28,7 @@ public class JDialogRoom extends javax.swing.JDialog {
         initComponents();
         
         userChoosedOkFlag=false;
+    
     }
     
     /**
@@ -151,15 +152,35 @@ public class JDialogRoom extends javax.swing.JDialog {
         }    
     }
     
+    /**
+     * 
+     * Εμφάνιση των δεδομένων από τα comboBox του Model του πίνακα όταν επιλέγουμε κάποια γραμμή.
+     */
+   public void comboBoxSelectGetValues(){
+       DefaultTableModel model = (DefaultTableModel) jTableRoom.getModel();
+     
+       //jComboBoxType
+       String comboTypeSelect = model.getValueAt(jTableRoom.getSelectedRow(), 1).toString();
+       for (int i = 0; i < jComboBoxType.getItemCount(); i++) {
+           if (jComboBoxType.getItemAt(i).equalsIgnoreCase(comboTypeSelect)) {
+               jComboBoxType.setSelectedIndex(i);
+           }
+       }
+       
+       //jComboBoxBeds
+       String comboBedsSelect = model.getValueAt(jTableRoom.getSelectedRow(), 2).toString();
+       for (int i = 0; i < jComboBoxBeds.getItemCount(); i++) {
+           if (jComboBoxBeds.getItemAt(i).equalsIgnoreCase(comboBedsSelect)) {
+               jComboBoxBeds.setSelectedIndex(i);
+           }
+       }
+   }
     
-     public void roomTableMouseClickedAction(){
+    public void roomTableMouseClickedAction(){
         jTextFieldID.setText(""+jTableRoom.getModel().getValueAt(jTableRoom.getSelectedRow(), 0));
-        jComboBoxType.equals(""+jTableRoom.getModel().getValueAt(jTableRoom.getSelectedRow(), 1));
-        jComboBoxBeds.equals(""+jTableRoom.getModel().getValueAt(jTableRoom.getSelectedRow(), 2));
         jTextFieldPrice.setText(""+jTableRoom.getModel().getValueAt(jTableRoom.getSelectedRow(), 3));
         
-        
-       
+        comboBoxSelectGetValues();
     }
     
     public void resetAction(){
