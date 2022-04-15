@@ -37,6 +37,7 @@ public class JDialogBooking extends javax.swing.JDialog {
      * Insert Action Button
      */
     public void insertBookingAction() {
+        
         String query = "INSERT INTO BOOKING(bID, bCheckIN, bCheckOUT, bPersons, bNumOfDays, roomID, clientAFM) VALUES(" +jTextFieldBookingID.getText()+ ", TO_DATE('"+jTextFieldCheckIN.getText()+"','DD/MM/YYYY'), TO_DATE('"+jTextFieldCheckOUT.getText()+"','DD/MM/YYYY'), "+jTextFieldPersons.getText()+", "+jTextFieldNumOfDays.getText()+", "+jComboBoxRoomID.getSelectedItem()+", "+jTextFieldClientsAFM.getText()+")";
         System.out.println("Query: \t" + query);
         Statement insertStatement;
@@ -241,8 +242,33 @@ public class JDialogBooking extends javax.swing.JDialog {
 
     }
     
-   
     
+    public void checkIn() {
+        // int id = 1;
+        String Query = ("SELECT max(bID) FROM BOOKING");
+        String price = jTextFieldPrice.getText();
+
+        try {
+
+            ResultSet rs = Select.getData(Query);
+            while (rs.next()) 
+          //  id=rs.getInt(1);
+         // id = id + 1;
+            {
+                if (!price.equals("")) {
+                    Query = "UPDATE ROOM SET rStatus= 'Booked' WHERE rID=" + (String) jComboBoxRoomID.getSelectedItem() + " ";
+                    InsertUpdateDelete.setData(Query, "");
+                    //Query = "INSERT INTO BOOKING(bID, bCheckIN, bCheckOUT, bPersons, bNumOfDays, roomID, clientAFM) VALUES(" +jTextFieldBookingID.getText()+ ", TO_DATE('"+jTextFieldCheckIN.getText()+"','DD/MM/YYYY'), TO_DATE('"+jTextFieldCheckOUT.getText()+"','DD/MM/YYYY'), "+jTextFieldPersons.getText()+", "+jTextFieldNumOfDays.getText()+", "+jComboBoxRoomID.getSelectedItem()+", "+jTextFieldClientsAFM.getText()+")";
+                    InsertUpdateDelete.setData(Query, "Client \n" + jTextFieldClientsAFM.getText() + "\n has CHECK IN successfully..!");
+
+                }
+            }
+        } catch (Exception e) {
+
+        }
+
+    }
+
     
 /**
 * 
@@ -706,6 +732,7 @@ public class JDialogBooking extends javax.swing.JDialog {
         insertBookingAction();
         loadBooking();
         okEnableCheckAction();
+        checkIn();
     }//GEN-LAST:event_jButtonInsertActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
