@@ -19,4 +19,6 @@ ORDER BY BOOKING.bID;
 
 
 
+UPDATE ROOM SET rStatus= 'Not Booked' WHERE rID= 7;
+UPDATE ROOM SET rStatus= 'Not Booked' WHERE rID= 12;
 
