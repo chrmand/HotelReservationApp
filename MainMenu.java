@@ -197,10 +197,11 @@ public class MainMenu extends javax.swing.JFrame {
             System.out.println("User Pressed OK!");
             
             System.out.println("ID: "+ conBooking.getID()); 
-            System.out.println("Check IN: "+ conBooking.getCheckIN()); 
-            System.out.println("Check Out: "+ conBooking.getCheckOUT()); 
-            System.out.println("Persons: "+ conBooking.getPersons()); 
-            System.out.println("Number Of Days: "+ conBooking.getNumOfDays());
+            System.out.println("Phone: "+ conBooking.getPhone());
+            System.out.println("Firstname: "+ conBooking.getFirstname()); 
+            System.out.println("Lastname: "+ conBooking.getLastname());
+            System.out.println("Check IN: "+ conBooking.getCheckIN());
+            System.out.println("Persons: "+ conBooking.getPersons());
             System.out.println("RoomID: "+ conBooking.getRoomID());
             System.out.println("Client's AFM: "+ conBooking.getClientsAFM());
         
@@ -227,9 +228,40 @@ public class MainMenu extends javax.swing.JFrame {
             System.out.println("ID: "+ conRoom.getID()); 
             System.out.println("Type: "+ conRoom.getTType()); 
             System.out.println("Beds: "+ conRoom.getBeds()); 
-             System.out.println("Price: "+ conRoom.getPrice()); 
+            System.out.println("Price: "+ conRoom.getPrice()); 
             
                       
+        }
+    }
+    
+    /**
+     * Payment JDialog 
+     */
+    public void connectPaymentAction() {
+        JDialogPayment conPayment = new JDialogPayment(this, true);
+        conPayment.setVisible(true);
+        
+        if (!conPayment.getUserChoosedOkFlag()) {
+            System.out.println("User Pressed Cancel!");
+            return;
+        }
+        
+        else {
+            System.out.println("User Pressed OK!");
+            
+            //System.out.println("Payment ID: "+ conPayment.getPaymentID()); 
+            System.out.println("Booking ID: "+ conPayment.getBookingID()); 
+            System.out.println("AFM: "+ conPayment.getAFM());
+            System.out.println("Phone: "+ conPayment.getPhone());
+            System.out.println("Firstname: "+ conPayment.getFirstname()); 
+            System.out.println("Lastname: "+ conPayment.getLastname());
+            System.out.println("Check IN: "+ conPayment.getCheckIN());
+            System.out.println("Check OUT: "+ conPayment.getCheckOUT());
+            System.out.println("Price Per Day: "+ conPayment.getPrice());
+            System.out.println("Total Amount: "+ conPayment.getTotalAmount());
+            System.out.println("Num Of Days: "+ conPayment.getNumOfDays());
+            System.out.println("Room ID: "+ conPayment.getRoomID());
+                              
         }
     }
      
@@ -305,6 +337,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         jButtonPayment.setText("PAYMENT");
         jButtonPayment.setEnabled(false);
+        jButtonPayment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPaymentActionPerformed(evt);
+            }
+        });
 
         jButtonExit.setText("EXIT");
         jButtonExit.addActionListener(new java.awt.event.ActionListener() {
@@ -399,7 +436,6 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jMenuItemConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConnectActionPerformed
        connectAction();
-       
     }//GEN-LAST:event_jMenuItemConnectActionPerformed
 
     private void jMenuItemDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDisconnectActionPerformed
@@ -434,6 +470,10 @@ public class MainMenu extends javax.swing.JFrame {
     private void jButtonRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRoomActionPerformed
         connectRoomAction();
     }//GEN-LAST:event_jButtonRoomActionPerformed
+
+    private void jButtonPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPaymentActionPerformed
+        connectPaymentAction();
+    }//GEN-LAST:event_jButtonPaymentActionPerformed
 
     /**
      * @param args the command line arguments
