@@ -76,7 +76,7 @@ INSERT INTO LOGIN VALUES
 
 INSERT INTO ROOM (rID, rType, rBeds, rPrice, rStatus)
 
-VALUES (01, 'Monoklino' , 1, '30', 'Not Booked');
+VALUES (01, 'Monoklino' , 1, '30', 'Booked');
 
 INSERT INTO ROOM VALUES (02, 'Monoklino', 1, '30', 'Not Booked');
 
@@ -86,7 +86,7 @@ INSERT INTO ROOM VALUES (04, 'Monoklino', 1, '30', 'Not Booked');
 
 INSERT INTO ROOM VALUES (05, 'Monoklino', 1, '30', 'Not Booked');
 
-INSERT INTO ROOM VALUES (06, 'Diklino', 2, '40', 'Not Booked');
+INSERT INTO ROOM VALUES (06, 'Diklino', 2, '40', 'Booked');
 
 INSERT INTO ROOM VALUES (07, 'Diklino', 2, '40', 'Not Booked');
 
@@ -96,7 +96,7 @@ INSERT INTO ROOM VALUES (09, 'Diklino', 2, '40', 'Not Booked');
 
 INSERT INTO ROOM VALUES (10, 'Diklino', 2, '40', 'Not Booked');
 
-INSERT INTO ROOM VALUES (11, 'Triklino', 3, '50', 'Not Booked');
+INSERT INTO ROOM VALUES (11, 'Triklino', 3, '50', 'Booked');
 
 INSERT INTO ROOM VALUES (12, 'Triklino', 3, '50', 'Not Booked');
 
@@ -108,25 +108,26 @@ INSERT INTO ROOM VALUES (15, 'Triklino', 3, '50', 'Not Booked');
 
 ----------------------------------------------------BOOKING INSERTS------------------------------------------------------------
 
-INSERT INTO BOOKING (bID, bCheckIN, bCheckOUT, bPersons, bNumOfDays, roomID, clientAFM)
+INSERT INTO BOOKING (bID, clientAFM, bFirstname, bLastname, bPhone, bCheckIN, bPersons, roomID, bRoomType, bRoomBeds, bPrice, bNumOfDays, bTotalAmount, bCheckOUT)
+VALUES ('1', 123111111, 'Sakis', 'Makritis', 698123320, TO_DATE('19/03/2022'), 1,  01, 'Monoklino', 1, 30, null, null, TO_DATE(''));
 
-VALUES ('1', TO_DATE('19/03/2022'), TO_DATE('29/03/2022'), 4, 10, 01, 123111111);
+INSERT INTO BOOKING 
+VALUES ('2', 123111112, 'Katerina', 'Nikou', 698123321, TO_DATE('22/04/2022'), 2,  06, 'Diklino', 2, 40, null, null, TO_DATE(''));
 
-INSERT INTO BOOKING
-VALUES ('2', TO_DATE('25/04/2022'), TO_DATE('30/04/2022'), 2, 5, 02, 123111112);
-
-INSERT INTO BOOKING
-VALUES ('3', TO_DATE('25/06/2022'), TO_DATE('05/07/2022'), 2, 10, 02, 123111113);
+INSERT INTO BOOKING 
+VALUES ('3', 123111113, 'Giannis', 'Emmanouhl', 698123322, TO_DATE('27/04/2022'), 3,  11, 'Triklino', 3, 50, null, null, TO_DATE(''));
 
 
 ----------------------------------------------------PAYMENT INSERTS------------------------------------------------------------
 
-INSERT INTO PAYMENT (pType, pPrice, pDescription, bookingID)
-
-VALUES ('Cash', 50, '', '1');
+/*
+INSERT INTO PAYMENT (pID,pAFM,pFirstname,pLastname,pPhone,pCheckIN,pCheckOUT,pPersons,pNumOfDays,pRoomID,pPricePerDay,pTotalAmount,bookingID)
+VALUES (1, 123111111, 'Sakis', 'Makritis', 698123320, TO_DATE('19/03/2022'), TO_DATE('29/03/2022'), 4, 10, 01, 30, null, '1');
 
 INSERT INTO PAYMENT 
-VALUES ('Visa', 50, 'Payment on check-OUT', '2');
+VALUES (2, 123111112, 'Katerina', 'Nikou', 698123321, TO_DATE('25/04/2022'), TO_DATE('30/04/2022'), 2, 5, 06, 40, null, '2');
+*/
+
 
 
 ----------------------------------------------------REGISTER INSERTS------------------------------------------------------------
