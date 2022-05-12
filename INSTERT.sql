@@ -109,10 +109,10 @@ INSERT INTO ROOM VALUES (15, 'Triklino', 3, '50', 'Not Booked');
 ----------------------------------------------------BOOKING INSERTS------------------------------------------------------------
 
 INSERT INTO BOOKING (bID, clientAFM, bFirstname, bLastname, bPhone, bCheckIN, bPersons, roomID, bRoomType, bRoomBeds, bPrice, bNumOfDays, bTotalAmount, bCheckOUT)
-VALUES ('1', 123111111, 'Sakis', 'Makritis', 698123320, TO_DATE('19/03/2022'), 1,  01, 'Monoklino', 1, 30, null, null, TO_DATE(''));
+VALUES ('1', 123111111, 'Sakis', 'Makritis', 698123320, TO_DATE('05/05/2022'), 1,  01, 'Monoklino', 1, 30, null, null, TO_DATE(''));
 
 INSERT INTO BOOKING 
-VALUES ('2', 123111112, 'Katerina', 'Nikou', 698123321, TO_DATE('22/04/2022'), 2,  06, 'Diklino', 2, 40, null, null, TO_DATE(''));
+VALUES ('2', 123111112, 'Katerina', 'Nikou', 698123321, TO_DATE('02/05/2022'), 2,  06, 'Diklino', 2, 40, null, null, TO_DATE(''));
 
 INSERT INTO BOOKING 
 VALUES ('3', 123111113, 'Giannis', 'Emmanouhl', 698123322, TO_DATE('27/04/2022'), 3,  11, 'Triklino', 3, 50, null, null, TO_DATE(''));
