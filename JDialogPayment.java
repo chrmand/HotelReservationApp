@@ -8,6 +8,8 @@ package hotelreservationapp;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.ResultSet;
@@ -57,6 +59,11 @@ public class JDialogPayment extends javax.swing.JDialog {
         jTextFieldTotalAmount.setEditable(false);
 
         jButtonReset.setVisible(false);
+        
+         //Εμφανίζει το JDialogPayment στη μέση της οθονης   
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
         
     }
     
@@ -266,7 +273,7 @@ public class JDialogPayment extends javax.swing.JDialog {
         jButtonCheckOUT = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Check OUT Form");
+        setTitle("Check OUT and Payment Form");
         setBounds(new java.awt.Rectangle(200, 200, 200, 200));
         setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {

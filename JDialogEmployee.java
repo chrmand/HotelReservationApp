@@ -5,6 +5,8 @@
  */
 package hotelreservationapp;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,6 +30,11 @@ public class JDialogEmployee extends javax.swing.JDialog {
         initComponents();
         
         userChoosedOkFlag=false;
+        
+         //Εμφανίζει το JDialogEmployee στη μέση της οθονης   
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
     }
     
     /**
@@ -306,7 +313,6 @@ public class JDialogEmployee extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Employee Form");
         setBounds(new java.awt.Rectangle(500, 200, 200, 200));
-        setPreferredSize(new java.awt.Dimension(657, 611));
         setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {

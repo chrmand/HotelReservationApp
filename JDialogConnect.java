@@ -5,6 +5,9 @@
  */
 package hotelreservationapp;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 
 /**
  *
@@ -22,6 +25,11 @@ public class JDialogConnect extends javax.swing.JDialog {
         initComponents();
         
         userChoosedOkFlag=false;
+        
+        //Εμφανίζει το JDialogConnect στη μέση της οθονης   
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
     }
     
      /**

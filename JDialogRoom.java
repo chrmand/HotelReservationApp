@@ -5,6 +5,8 @@
  */
 package hotelreservationapp;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,6 +31,10 @@ public class JDialogRoom extends javax.swing.JDialog {
         
         userChoosedOkFlag=false;
     
+         //Εμφανίζει το JDialogRoom στη μέση της οθονης   
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
     }
     
     /**
