@@ -6,6 +6,7 @@
 package hotelreservationapp;
 
 import java.sql.*;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 
@@ -266,7 +267,11 @@ public class MainMenu extends javax.swing.JFrame {
     }
      
     public void exitAction(){
-       this.dispose();
+        int a = JOptionPane.showConfirmDialog(null, "Do you want to EXIT?", "Select", JOptionPane.YES_NO_OPTION);
+        if(a == 0) 
+        {
+          this.dispose();
+        }
     }
     
 
@@ -297,9 +302,10 @@ public class MainMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotel Reservation App");
         setBounds(new java.awt.Rectangle(500, 200, 200, 200));
-        setPreferredSize(new java.awt.Dimension(1050, 610));
+        setPreferredSize(new java.awt.Dimension(811, 639));
         setResizable(false);
 
+        jButtonEmployee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-employee-2.png"))); // NOI18N
         jButtonEmployee.setText("EMPLOYEE");
         jButtonEmployee.setEnabled(false);
         jButtonEmployee.addActionListener(new java.awt.event.ActionListener() {
@@ -308,9 +314,11 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        jButtonStorage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-storage.png"))); // NOI18N
         jButtonStorage.setText("STORAGE");
         jButtonStorage.setEnabled(false);
 
+        jButtonClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-client.png"))); // NOI18N
         jButtonClient.setText("CLIENT");
         jButtonClient.setEnabled(false);
         jButtonClient.addActionListener(new java.awt.event.ActionListener() {
@@ -319,6 +327,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        jButtonBooking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-booking.png"))); // NOI18N
         jButtonBooking.setText("BOOKING");
         jButtonBooking.setEnabled(false);
         jButtonBooking.addActionListener(new java.awt.event.ActionListener() {
@@ -327,6 +336,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        jButtonRoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-room.png"))); // NOI18N
         jButtonRoom.setText("ROOM");
         jButtonRoom.setEnabled(false);
         jButtonRoom.addActionListener(new java.awt.event.ActionListener() {
@@ -335,6 +345,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        jButtonPayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-payment-check-out-.png"))); // NOI18N
         jButtonPayment.setText("PAYMENT");
         jButtonPayment.setEnabled(false);
         jButtonPayment.addActionListener(new java.awt.event.ActionListener() {
@@ -343,15 +354,17 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        jButtonExit.setText("EXIT");
+        jButtonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/exitIcon.png"))); // NOI18N
         jButtonExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExitActionPerformed(evt);
             }
         });
 
-        jMenuConnectDB.setText("ConnectDB");
+        jMenuConnectDB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/databIcon.png"))); // NOI18N
+        jMenuConnectDB.setText("Database");
 
+        jMenuItemConnect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/conIcon.png"))); // NOI18N
         jMenuItemConnect.setText("Connect");
         jMenuItemConnect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -360,6 +373,7 @@ public class MainMenu extends javax.swing.JFrame {
         });
         jMenuConnectDB.add(jMenuItemConnect);
 
+        jMenuItemDisconnect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/disIcon.png"))); // NOI18N
         jMenuItemDisconnect.setText("Disconnect");
         jMenuItemDisconnect.setEnabled(false);
         jMenuItemDisconnect.addActionListener(new java.awt.event.ActionListener() {
@@ -398,35 +412,35 @@ public class MainMenu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonClient, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonStorage, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(655, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButtonBooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonRoom, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonStorage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonEmployee, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonClient, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonPayment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(631, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonExit)
+                .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jButtonEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(jButtonEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonClient, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jButtonBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jButtonRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonClient, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jButtonStorage, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(jButtonPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jButtonStorage, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonExit)
                 .addGap(23, 23, 23))
         );

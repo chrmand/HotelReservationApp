@@ -48,16 +48,16 @@ public class JDialogPayment extends javax.swing.JDialog {
         jTextFieldAFM.setEditable(false);
         
         jTextFieldCheckIN.setEditable(false);
-        //jTextFieldCheckOUT.setEditable(false);
+        jTextFieldCheckOUT.setEditable(false);
         
        
         jTextFieldNumOfDays.setEditable(false);
         
         jTextFieldPrice.setEditable(false);
         jTextFieldTotalAmount.setEditable(false);
+
         jButtonReset.setVisible(false);
         
-       
     }
     
     //int id=0;
@@ -165,6 +165,7 @@ public class JDialogPayment extends javax.swing.JDialog {
         jTextFieldTotalAmount.setText("");
        
         jTextFieldRoomID.setEditable(true);
+        jButtonCheckOUT.setEnabled(false);
 
         SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/YYYY");
         Calendar cal = Calendar.getInstance();
@@ -266,7 +267,7 @@ public class JDialogPayment extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Check OUT Form");
-        setBounds(new java.awt.Rectangle(500, 200, 200, 200));
+        setBounds(new java.awt.Rectangle(200, 200, 200, 200));
         setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -274,6 +275,7 @@ public class JDialogPayment extends javax.swing.JDialog {
             }
         });
 
+        jButtonReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-reset.png"))); // NOI18N
         jButtonReset.setText("Reset");
         jButtonReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,7 +314,7 @@ public class JDialogPayment extends javax.swing.JDialog {
         });
 
         jLabelCheckOUT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelCheckOUT.setText("Check Out");
+        jLabelCheckOUT.setText("Check Out (Today)");
 
         jLabelCheckIN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelCheckIN.setText("Check In");
@@ -338,6 +340,7 @@ public class JDialogPayment extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel7.setText("Room Number");
 
+        jButtonSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-search.png"))); // NOI18N
         jButtonSearch.setText("Search");
         jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -373,7 +376,9 @@ public class JDialogPayment extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTablePayment);
 
+        jButtonCheckOUT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-payment-check-out-.png"))); // NOI18N
         jButtonCheckOUT.setText("CHECK OUT");
+        jButtonCheckOUT.setEnabled(false);
         jButtonCheckOUT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCheckOUTActionPerformed(evt);
@@ -396,6 +401,18 @@ public class JDialogPayment extends javax.swing.JDialog {
                 .addGap(158, 158, 158)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72)
+                        .addComponent(jLabelNumberOfDays)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldNumOfDays, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldTotalAmount))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel8))
@@ -411,31 +428,19 @@ public class JDialogPayment extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextFieldLastname, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                             .addComponent(jTextFieldPhone)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(330, 330, 330)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonSearch))
                     .addComponent(jLabelBookingID)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(114, 114, 114)
                         .addComponent(jTextFieldBookingID, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addGap(330, 330, 330)
+                        .addComponent(jLabel7)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72)
-                        .addComponent(jLabelNumberOfDays)
+                        .addComponent(jTextFieldRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldNumOfDays, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldTotalAmount, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)))
+                        .addComponent(jButtonSearch)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelCheckOUT)
@@ -443,10 +448,12 @@ public class JDialogPayment extends javax.swing.JDialog {
                         .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextFieldCheckIN)
-                            .addComponent(jTextFieldCheckOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButtonCheckOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(252, 252, 252)
-                .addComponent(jButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldCheckOUT, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(354, 354, 354))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonCheckOUT)
+                        .addGap(313, 313, 313)))
+                .addComponent(jButtonReset)
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
@@ -486,7 +493,7 @@ public class JDialogPayment extends javax.swing.JDialog {
                             .addComponent(jLabel2)
                             .addComponent(jTextFieldFirstname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldLastname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -539,6 +546,7 @@ public class JDialogPayment extends javax.swing.JDialog {
             if(rs.next()){
                 jTextFieldRoomID.setEditable(false);
                 jButtonReset.setVisible(true);
+                jButtonCheckOUT.setEnabled(true);
                // id=rs.getInt(1);
                 jTextFieldBookingID.setText(rs.getString(1));
                 jTextFieldAFM.setText(rs.getString(2));

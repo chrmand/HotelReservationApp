@@ -44,7 +44,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabelBookingID" min="-2" max="-2" attributes="0"/>
@@ -87,47 +87,32 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="249" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonDelete" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
-                          <Component id="jButtonReset" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
-                      </Group>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jButtonPayment" min="-2" pref="115" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabelType" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jComboBoxType" min="-2" pref="90" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jLabelBeds" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLabelRoomID" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                              <Component id="jComboBoxRoomID" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabelType" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jComboBoxBeds" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                              <Component id="jLabelPrice" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jTextFieldPrice" min="-2" pref="36" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jButtonInsert" min="-2" pref="115" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="jComboBoxType" min="-2" pref="90" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jLabelBeds" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jComboBoxBeds" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="jLabelPrice" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jTextFieldPrice" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jLabelRoomID" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
+                      <Component id="jComboBoxRoomID" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="185" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="jButtonInsert" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jButtonPayment" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jButtonDelete" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jButtonReset" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
           </Group>
@@ -138,34 +123,35 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Component id="jLabelBooking" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelType" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxType" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelBeds" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBoxBeds" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabelPrice" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldPrice" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace pref="20" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelType" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxType" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelBeds" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxBeds" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelPrice" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldPrice" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabelRoomID" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jComboBoxRoomID" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jButtonInsert" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jButtonInsert" min="-2" pref="49" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jButtonPayment" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabelBookingID" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextFieldBookingID" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -180,18 +166,15 @@
                                   <Component id="jLabelPersons" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextFieldPersons" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                              <Component id="jButtonPayment" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                              <Component id="jButtonDelete" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="jButtonReset" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                              <Component id="jButtonDelete" min="-2" pref="61" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <Component id="jButtonReset" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="204" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -343,6 +326,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="jButtonReset">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/icons-reset.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Reset"/>
       </Properties>
       <Events>
@@ -380,6 +366,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonDelete">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/icons-delete.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Delete"/>
       </Properties>
       <Events>
@@ -388,7 +377,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonInsert">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Insert"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/icons-save.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Save"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -398,6 +390,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonPayment">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/icons/icons-payment-check-out-.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Check OUT"/>
       </Properties>
       <Events>

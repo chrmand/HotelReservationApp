@@ -5,6 +5,7 @@
  */
 package hotelreservationapp;
 
+
 /**
  *
  * @author Χρήστος
@@ -48,7 +49,8 @@ public class JDialogConnect extends javax.swing.JDialog {
             String passField = new String(jPasswordFieldPassword.getPassword());
             int length = passField.length();
         }
-        else {
+        else 
+        {
             jButtonConnect.setEnabled(false);
         }
     }
@@ -65,7 +67,7 @@ public class JDialogConnect extends javax.swing.JDialog {
     public String getConnectionString() {
         return this.jTextFieldConnectionString.getText();
     }
-    
+   
   
     public boolean getUserChoosedOkFlag() {
         return this.userChoosedOkFlag;
@@ -93,9 +95,10 @@ public class JDialogConnect extends javax.swing.JDialog {
         setBounds(new java.awt.Rectangle(500, 200, 200, 200));
 
         jLabelConnect.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabelConnect.setText("Connect");
+        jLabelConnect.setText("Connect to Database");
 
         jLabelUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelUsername.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/userIcon.png"))); // NOI18N
         jLabelUsername.setText("Username");
 
         jTextFieldUsername.setText("c##MAnd");
@@ -106,6 +109,7 @@ public class JDialogConnect extends javax.swing.JDialog {
         });
 
         jLabelPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/passIcon.png"))); // NOI18N
         jLabelPassword.setText("Password");
 
         jPasswordFieldPassword.setText("chris123");
@@ -124,7 +128,7 @@ public class JDialogConnect extends javax.swing.JDialog {
         jLabelConnectionString.setText("Connection String");
 
         jTextFieldConnectionString.setEditable(false);
-        jTextFieldConnectionString.setText("jdbc:oracle:thin:@127.0.0.1:1521:xe");
+        jTextFieldConnectionString.setText("jdbc:oracle:thin:@localhost:1521:xe");
         jTextFieldConnectionString.setEnabled(false);
         jTextFieldConnectionString.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -132,6 +136,7 @@ public class JDialogConnect extends javax.swing.JDialog {
             }
         });
 
+        jButtonConnect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/dbIcon.png"))); // NOI18N
         jButtonConnect.setText("CONNECT");
         jButtonConnect.setEnabled(false);
         jButtonConnect.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -150,50 +155,52 @@ public class JDialogConnect extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(171, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelUsername))
-                    .addComponent(jLabelConnectionString))
+                .addGap(171, 171, 171)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelConnectionString)
                         .addGap(30, 30, 30)
-                        .addComponent(jTextFieldConnectionString, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldConnectionString, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                .addGap(30, 30, 30))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(76, 76, 76))
+                            .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(169, 169, 169))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabelConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(210, 210, 210))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(224, 224, 224))))
+                .addComponent(jButtonConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(224, 224, 224))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(jLabelConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(33, 33, 33)
                 .addComponent(jLabelConnect)
-                .addGap(37, 37, 37)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                    .addComponent(jLabelPassword))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelConnectionString)
                     .addComponent(jTextFieldConnectionString, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                .addGap(27, 27, 27)
                 .addComponent(jButtonConnect, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -223,6 +230,7 @@ public class JDialogConnect extends javax.swing.JDialog {
 
     private void jButtonConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectActionPerformed
         okAction();
+        
     }//GEN-LAST:event_jButtonConnectActionPerformed
 
     /**
