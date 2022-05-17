@@ -1,19 +1,43 @@
 
 ----------------------------------------------------STORAGE INSERTS------------------------------------------------------------
 
-INSERT INTO STORAGE (sID, sCleaningProduct, sLinenProduct)
+INSERT INTO STORAGE (sStorageName, sID, sCategory, sProductName, sQuantity)
 
-VALUES (1, 'Gantia', 'Sentonia');
-
-INSERT INTO STORAGE
-VALUES (2, 'Aporypantika', 'Maksilaria');
+VALUES ('Cleaning Storage', '100', 'Cleaning Product', 'Plastic Gloves', '25');
 
 INSERT INTO STORAGE
-VALUES (3, 'Sakoules', 'Petsetes');
+VALUES ('Cleaning Storage', '101', 'Cleaning Product', 'Chlorine', '25');
+
+INSERT INTO STORAGE
+VALUES ('Cleaning Storage', '102', 'Cleaning Product', 'Garbage Bags', '450');
+
+INSERT INTO STORAGE
+VALUES ('Cleaning Storage', '103', 'Cleaning Product', 'Head Sampoo', '450');
+
+INSERT INTO STORAGE
+VALUES ('Cleaning Storage', '104', 'Cleaning Product', 'Body Sampoo', '450');
+
+INSERT INTO STORAGE
+VALUES ('Linen Storage', '200', 'Linen Product', 'Katosentono', '50');
+
+INSERT INTO STORAGE
+VALUES ('Linen Storage', '201', 'Linen Product', 'Panosentono', '50');
+
+INSERT INTO STORAGE
+VALUES ('Linen Storage', '203', 'Linen Product', 'Pillowcases', '50');
+
+INSERT INTO STORAGE
+VALUES ('Linen Storage', '204', 'Linen Product', 'Protective Bed Coatings', '50');
+
+INSERT INTO STORAGE
+VALUES ('Linen Storage', '205', 'Linen Product', 'Bath Towel', '50');
+
+INSERT INTO STORAGE
+VALUES ('Linen Storage', '206', 'Linen Product', 'Hand Towel', '50');
 
 
 ----------------------------------------------------EMPLOYEE INSERTS------------------------------------------------------------
-
+/*
 INSERT INTO EMPLOYEE (eAFM, eFirstname, eLastname, eHireDate, eType, managesStorageID)
 
 VALUES (123456789, 'Christos', 'Mandravelis', TO_DATE('19/03/2022'), 'A', 1);
@@ -32,6 +56,49 @@ INSERT INTO EMPLOYEE VALUES
 
 INSERT INTO EMPLOYEE VALUES 
 (223456110, 'Lakis', 'Kamakaris', TO_DATE('22/06/2022'), 'E', NULL);
+*/
+
+
+/* LAST UPDATE
+INSERT INTO EMPLOYEE (eAFM, eFirstname, eLastname, eHireDate, eType, managesStorageCategory)
+
+VALUES (123456789, 'Christos', 'Mandravelis', TO_DATE('19/03/2022'), 'A', NULL);
+
+INSERT INTO EMPLOYEE VALUES 
+(123456799, 'Maria', 'Karavasili', TO_DATE('19/03/2022'), 'E', NULL);
+
+INSERT INTO EMPLOYEE VALUES 
+(223456789, 'Kostas', 'Kapas', TO_DATE('28/05/2022'), 'E', NULL);
+
+INSERT INTO EMPLOYEE VALUES 
+(223456719, 'Alexandra', 'Pasourh', TO_DATE('22/05/2022'), 'E', NULL);
+
+INSERT INTO EMPLOYEE VALUES 
+(223456700, 'Mixaela', 'Giasourh', TO_DATE('22/05/2022'), 'A', NULL);
+
+INSERT INTO EMPLOYEE VALUES 
+(223456110, 'Lakis', 'Kamakaris', TO_DATE('22/06/2022'), 'E', NULL);
+*/
+
+INSERT INTO EMPLOYEE (eAFM, eFirstname, eLastname, eHireDate)
+
+VALUES (123456789, 'Christos', 'Mandravelis', TO_DATE('19/03/2022'));
+
+INSERT INTO EMPLOYEE VALUES 
+(123456799, 'Maria', 'Karavasili', TO_DATE('19/03/2022'));
+
+INSERT INTO EMPLOYEE VALUES 
+(223456789, 'Kostas', 'Kapas', TO_DATE('28/05/2022'));
+
+INSERT INTO EMPLOYEE VALUES 
+(223456719, 'Alexandra', 'Pasourh', TO_DATE('22/05/2022'));
+
+INSERT INTO EMPLOYEE VALUES 
+(223456700, 'Mixaela', 'Giasourh', TO_DATE('22/05/2022'));
+
+INSERT INTO EMPLOYEE VALUES 
+(223456110, 'Lakis', 'Kamakaris', TO_DATE('22/06/2022'));
+
 
 
 ----------------------------------------------------CLIENT INSERTS------------------------------------------------------------
@@ -56,7 +123,7 @@ VALUES (123111116, 'Zoi', 'Grafidou', 698123325, 'Greece', 'Volos', 'Agias', 8, 
 
 
 ----------------------------------------------------LOGIN INSERTS------------------------------------------------------------
-
+/*
 INSERT INTO LOGIN (lAFM, lPassword, lType, employeeAFM)
 
 VALUES (123456789, 'chris123', 'admin', 123456789);
@@ -70,7 +137,7 @@ INSERT INTO LOGIN VALUES
 INSERT INTO LOGIN VALUES 
 (223456110, 'lakis123', 'employee', 223456110);
 
-
+*/
 
 ----------------------------------------------------ROOM INSERTS----------------------------------------------------------------
 
@@ -118,56 +185,6 @@ INSERT INTO BOOKING
 VALUES ('3', 123111113, 'Giannis', 'Emmanouhl', 698123322, TO_DATE('27/04/2022'), 3,  11, 'Triklino', 3, 50, null, null, TO_DATE(''));
 
 
-----------------------------------------------------PAYMENT INSERTS------------------------------------------------------------
-
-/*
-INSERT INTO PAYMENT (pID,pAFM,pFirstname,pLastname,pPhone,pCheckIN,pCheckOUT,pPersons,pNumOfDays,pRoomID,pPricePerDay,pTotalAmount,bookingID)
-VALUES (1, 123111111, 'Sakis', 'Makritis', 698123320, TO_DATE('19/03/2022'), TO_DATE('29/03/2022'), 4, 10, 01, 30, null, '1');
-
-INSERT INTO PAYMENT 
-VALUES (2, 123111112, 'Katerina', 'Nikou', 698123321, TO_DATE('25/04/2022'), TO_DATE('30/04/2022'), 2, 5, 06, 40, null, '2');
-*/
-
-
-
-----------------------------------------------------REGISTER INSERTS------------------------------------------------------------
-
-INSERT INTO REGISTER (eAFM, cAFM, cRegisterDate)
-
-VALUES (123456789, 123111111, '19/03/2022');
-
-INSERT INTO REGISTER
-VALUES (123456789, 123111116, '20/03/2022');
-
-INSERT INTO REGISTER
-VALUES (123456799, 123111112, '20/03/2022');
-
-INSERT INTO REGISTER
-VALUES (123456799, 123111113, '25/03/2022');
-
-INSERT INTO REGISTER
-VALUES (223456789, 123111114, '25/03/2022'); 
-
-INSERT INTO REGISTER
-VALUES (223456789, 123111115, '25/03/2022');
-
-----------------------------------------------------RESERVE INSERTS------------------------------------------------------------
-/*
-INSERT INTO RESERVE (cAFM, bID)
-
-VALUES (123111111, '00001');
-
-
-INSERT INTO RESERVE 
-VALUES (123111112, '00002');
-
-*/
-
-
-
-
-
-
-
+commit;
 
 

@@ -5,6 +5,7 @@
  */
 package hotelreservationapp;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.ResultSet;
@@ -28,6 +29,7 @@ public class JDialogRoom extends javax.swing.JDialog {
     public JDialogRoom(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        paintColorBackground();
         
         userChoosedOkFlag=false;
     
@@ -35,6 +37,12 @@ public class JDialogRoom extends javax.swing.JDialog {
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+    }
+    
+       public void paintColorBackground() {
+        getContentPane().setBackground(Color.BLUE);
+        Color col = new Color(148, 222, 222);
+        getContentPane().setBackground(col);
     }
     
     /**
@@ -80,7 +88,7 @@ public class JDialogRoom extends javax.swing.JDialog {
         } 
         catch (SQLException ex) {
             showMessageDialog(this, ex.getMessage()); 
-            JOptionPane.showMessageDialog(null, "Error, you can't change the ID...");
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
     
@@ -283,7 +291,6 @@ public class JDialogRoom extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Room Form");
         setBounds(new java.awt.Rectangle(500, 200, 200, 200));
-        setPreferredSize(new java.awt.Dimension(557, 766));
         setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -374,6 +381,7 @@ public class JDialogRoom extends javax.swing.JDialog {
         });
 
         jLabelBooking.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabelBooking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-room.png"))); // NOI18N
         jLabelBooking.setText("ROOM");
 
         jButtonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-delete.png"))); // NOI18N
@@ -415,10 +423,6 @@ public class JDialogRoom extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelBooking)
-                .addGap(261, 261, 261))
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,13 +443,17 @@ public class JDialogRoom extends javax.swing.JDialog {
                     .addComponent(jButtonDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(31, 31, 31))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(177, 177, 177)
+                .addComponent(jLabelBooking)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(24, 24, 24)
                 .addComponent(jLabelBooking)
-                .addGap(62, 62, 62)
+                .addGap(49, 49, 49)
                 .addComponent(jButtonInsert)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -473,7 +481,7 @@ public class JDialogRoom extends javax.swing.JDialog {
                 .addComponent(jButtonReset)
                 .addGap(45, 45, 45)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();

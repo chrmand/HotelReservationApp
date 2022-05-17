@@ -5,10 +5,14 @@
  */
 package hotelreservationapp;
 
+import com.sun.istack.internal.logging.Logger;
+import com.sun.javafx.applet.Splash;
 import java.awt.*;
 import java.sql.*;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JProgressBar;
 
 
 /**
@@ -18,27 +22,38 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class MainMenu extends javax.swing.JFrame {
 
    static Connection con;
-     
+   progressBar t1;
   
      
+    
     
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
         initComponents();
+        paintColorBackground();
 
      //Εμφανίζει το JFrame MainMenu στη μέση της οθονης   
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+        
+        jProgressBar.setVisible(false);
+        jLabelProgressBarPercentage.setVisible(false);
+       
     }
+    
     
   
     public static Connection getCon() {
         return con;
     }
     
+    public void paintColorBackground() {
+        Color col = new Color(148,222,222);
+        getContentPane().setBackground(col);
+    }
     
     /**
      * Connect Action JDialog 
@@ -64,9 +79,24 @@ public class MainMenu extends javax.swing.JFrame {
             try{
                 Class.forName("oracle.jdbc.driver.OracleDriver");
                 con = DriverManager.getConnection(connect.getConnectionString(), connect.getUsername(), connect.getPassword());
-                showMessageDialog(this, "Connected Succesfully!"); 
+                JOptionPane.showMessageDialog(rootPane, "Connected Succesfully!","", JOptionPane.INFORMATION_MESSAGE);
                 jMenuItemConnect.setEnabled(false);
-                setActionStatus();
+                
+
+              //Progress Bar loading action if connected is successfully!
+                if(connect.getUserChoosedOkFlag() == true){
+                    
+                    jProgressBar.setVisible(true);
+                    jLabelProgressBarPercentage.setVisible(true);
+                    jButtonExit.setEnabled(false);
+                    jMenuExit.setEnabled(false);
+                    jMenuConnectDB.setEnabled(false);
+                                 
+                    t1 = new MainMenu.progressBar(jProgressBar);
+                    t1.start();
+
+                }
+
             }
 
             catch (ClassNotFoundException ex) {
@@ -77,16 +107,47 @@ public class MainMenu extends javax.swing.JFrame {
             }
             
         }  
-       
-            /*
-        
-            JDialogLogin login = new JDialogLogin(this, true);
-            login.setVisible(true);
-        
-            */
-            
+
+    }
+    /**
+     * Progress Bar Action. 
+     */  
+    
+   class progressBar extends Thread {
+        JProgressBar pBar;
          
-    } 
+        progressBar(JProgressBar pBar){
+            
+            pBar = jProgressBar;
+        }
+        
+        public void run(){
+
+                try{
+                    for(int i = 0; i <= 100; i++){
+                        Thread.sleep(100);
+                        jProgressBar.setValue(i);
+                        jLabelProgressBarPercentage.setText(String.valueOf(i)+ "%");
+                        
+                      if(i==100){
+                        jProgressBar.setVisible(false);
+                        jLabelProgressBarPercentage.setVisible(false);
+                        
+                        jButtonExit.setEnabled(true);
+                        jMenuExit.setEnabled(true);
+                        jMenuConnectDB.setEnabled(true);
+                        
+                        setActionStatus();
+                      }
+                    }  
+                    
+                }catch(Exception e){
+                  
+                }  
+               
+        }
+    }
+    
     
     /**
      * Disconnect Action. 
@@ -106,7 +167,6 @@ public class MainMenu extends javax.swing.JFrame {
      public void setActionStatus(){
         if ( !jMenuItemConnect.isEnabled() ) {
             jMenuItemDisconnect.setEnabled(true);
-            jMenuLogin.setEnabled(true);
             
             jButtonEmployee.setEnabled(true);
             jButtonClient.setEnabled(true);
@@ -120,7 +180,6 @@ public class MainMenu extends javax.swing.JFrame {
         else {
             
             jMenuItemDisconnect.setEnabled(false);
-            jMenuLogin.setEnabled(false);
             
             jButtonEmployee.setEnabled(false);
             jButtonClient.setEnabled(false);
@@ -151,10 +210,7 @@ public class MainMenu extends javax.swing.JFrame {
             System.out.println("Lastname: "+ conEmployee.getLastname());
             System.out.println("AFM: "+ conEmployee.getAFM());
             System.out.println("Hire Date: "+ conEmployee.getHireDate());
-            System.out.println("Type: "+ conEmployee.getEType());
-            System.out.println("Manages StorageID: "+ conEmployee.getManagesStorageID());
-            
-                              
+                      
         }
     }
     
@@ -256,7 +312,6 @@ public class MainMenu extends javax.swing.JFrame {
         else {
             System.out.println("User Pressed OK!");
             
-            //System.out.println("Payment ID: "+ conPayment.getPaymentID()); 
             System.out.println("Booking ID: "+ conPayment.getBookingID()); 
             System.out.println("AFM: "+ conPayment.getAFM());
             System.out.println("Phone: "+ conPayment.getPhone());
@@ -268,6 +323,30 @@ public class MainMenu extends javax.swing.JFrame {
             System.out.println("Total Amount: "+ conPayment.getTotalAmount());
             System.out.println("Num Of Days: "+ conPayment.getNumOfDays());
             System.out.println("Room ID: "+ conPayment.getRoomID());
+                              
+        }
+    }
+    
+     /**
+     * Storage JDialog 
+     */
+    public void connectStorageAction() {
+        JDialogStorage conStorage = new JDialogStorage(this, true);
+        conStorage.setVisible(true);
+        
+        if (!conStorage.getUserChoosedOkFlag()) {
+            System.out.println("User Pressed Cancel!");
+            return;
+        }
+        
+        else {
+            System.out.println("User Pressed OK!");
+            
+            System.out.println("Storage Name: "+ conStorage.getStorageName()); 
+            System.out.println("ID: "+ conStorage.getStorageID()); 
+            System.out.println("Category: "+ conStorage.getCategory());
+            System.out.println("Product Name: "+ conStorage.getProductName());
+            System.out.println("Quantity: "+ conStorage.getQuantity()); 
                               
         }
     }
@@ -298,16 +377,18 @@ public class MainMenu extends javax.swing.JFrame {
         jButtonRoom = new javax.swing.JButton();
         jButtonPayment = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelWelcomeLogo = new javax.swing.JLabel();
+        jProgressBar = new javax.swing.JProgressBar();
+        jLabelProgressBarPercentage = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuConnectDB = new javax.swing.JMenu();
         jMenuItemConnect = new javax.swing.JMenuItem();
         jMenuItemDisconnect = new javax.swing.JMenuItem();
-        jMenuLogin = new javax.swing.JMenu();
         jMenuExit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotel Reservation App");
+        setBackground(new java.awt.Color(46, 224, 242));
         setBounds(new java.awt.Rectangle(200, 200, 200, 200));
         setPreferredSize(new java.awt.Dimension(1153, 1015));
         setResizable(false);
@@ -324,6 +405,11 @@ public class MainMenu extends javax.swing.JFrame {
         jButtonStorage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-storage.png"))); // NOI18N
         jButtonStorage.setText("STORAGE");
         jButtonStorage.setEnabled(false);
+        jButtonStorage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonStorageActionPerformed(evt);
+            }
+        });
 
         jButtonClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-client.png"))); // NOI18N
         jButtonClient.setText("CLIENT");
@@ -368,8 +454,13 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/welcome-background-transparent.png"))); // NOI18N
-        jLabel1.setPreferredSize(new java.awt.Dimension(1153, 1040));
+        jLabelWelcomeLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/welcome-background-transparent.png"))); // NOI18N
+        jLabelWelcomeLogo.setPreferredSize(new java.awt.Dimension(1153, 1040));
+
+        jProgressBar.setForeground(new java.awt.Color(73, 70, 70));
+
+        jLabelProgressBarPercentage.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelProgressBarPercentage.setText("0%");
 
         jMenuConnectDB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/databIcon.png"))); // NOI18N
         jMenuConnectDB.setText("Database");
@@ -395,16 +486,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuBar.add(jMenuConnectDB);
 
-        jMenuLogin.setForeground(new java.awt.Color(0, 204, 0));
-        jMenuLogin.setText("Login");
-        jMenuLogin.setEnabled(false);
-        jMenuLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuLoginActionPerformed(evt);
-            }
-        });
-        jMenuBar.add(jMenuLogin);
-
         jMenuExit.setForeground(new java.awt.Color(255, 51, 51));
         jMenuExit.setText("Exit");
         jMenuExit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -420,30 +501,37 @@ public class MainMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButtonBooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonRoom, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonStorage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEmployee, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonClient, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonPayment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(104, 104, 104)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButtonBooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonRoom, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonStorage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonEmployee, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonClient, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonPayment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(104, 104, 104)
+                        .addComponent(jLabelWelcomeLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(191, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addComponent(jLabelProgressBarPercentage)
+                .addGap(520, 520, 520))
+            .addComponent(jProgressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
-                        .addComponent(jButtonEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(107, 107, 107)
+                        .addComponent(jButtonEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)
                         .addComponent(jButtonClient, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60)
@@ -456,10 +544,13 @@ public class MainMenu extends javax.swing.JFrame {
                         .addComponent(jButtonStorage, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(jLabelWelcomeLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(3, 3, 3)
                 .addComponent(jButtonExit)
-                .addGap(24, 24, 24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelProgressBarPercentage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -477,12 +568,7 @@ public class MainMenu extends javax.swing.JFrame {
         exitAction();
     }//GEN-LAST:event_jMenuExitMouseClicked
 
-    private void jMenuLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuLoginActionPerformed
-
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
-        // TODO add your handling code here:
         exitAction();
     }//GEN-LAST:event_jButtonExitActionPerformed
 
@@ -505,6 +591,10 @@ public class MainMenu extends javax.swing.JFrame {
     private void jButtonPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPaymentActionPerformed
         connectPaymentAction();
     }//GEN-LAST:event_jButtonPaymentActionPerformed
+
+    private void jButtonStorageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStorageActionPerformed
+        connectStorageAction();
+    }//GEN-LAST:event_jButtonStorageActionPerformed
 
     /**
      * @param args the command line arguments
@@ -549,12 +639,13 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButtonPayment;
     private javax.swing.JButton jButtonRoom;
     private javax.swing.JButton jButtonStorage;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelProgressBarPercentage;
+    private javax.swing.JLabel jLabelWelcomeLogo;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuConnectDB;
     private javax.swing.JMenu jMenuExit;
     private javax.swing.JMenuItem jMenuItemConnect;
     private javax.swing.JMenuItem jMenuItemDisconnect;
-    private javax.swing.JMenu jMenuLogin;
+    private javax.swing.JProgressBar jProgressBar;
     // End of variables declaration//GEN-END:variables
 }

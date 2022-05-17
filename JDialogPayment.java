@@ -8,6 +8,7 @@ package hotelreservationapp;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
@@ -37,10 +38,10 @@ public class JDialogPayment extends javax.swing.JDialog {
     public JDialogPayment(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        paintColorBackground();
+                
         userChoosedOkFlag=false;
         
-       // jTextFieldPaymentID.setEditable(false);
         jTextFieldBookingID.setEditable(false);
         
         jTextFieldFirstname.setEditable(false);
@@ -50,7 +51,7 @@ public class JDialogPayment extends javax.swing.JDialog {
         jTextFieldAFM.setEditable(false);
         
         jTextFieldCheckIN.setEditable(false);
-        jTextFieldCheckOUT.setEditable(false);
+        jTextFieldCheckOUT.setEditable(true);
         
        
         jTextFieldNumOfDays.setEditable(false);
@@ -65,6 +66,15 @@ public class JDialogPayment extends javax.swing.JDialog {
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
         
+        SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/YYYY");
+        Calendar cal = Calendar.getInstance();
+        jTextFieldCheckOUT.setText(myFormat.format(cal.getTime()));
+        
+    }
+    
+    public void paintColorBackground() {
+        Color col = new Color(148, 222, 222);
+        getContentPane().setBackground(col);
     }
     
     //int id=0;
@@ -312,6 +322,7 @@ public class JDialogPayment extends javax.swing.JDialog {
         });
 
         jLabelBooking.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabelBooking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-payment-check-out-.png"))); // NOI18N
         jLabelBooking.setText("Check Out and Payment");
 
         jTextFieldBookingID.addCaretListener(new javax.swing.event.CaretListener() {
@@ -396,10 +407,6 @@ public class JDialogPayment extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(556, 556, 556)
-                .addComponent(jLabelBooking)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -462,13 +469,17 @@ public class JDialogPayment extends javax.swing.JDialog {
                         .addGap(313, 313, 313)))
                 .addComponent(jButtonReset)
                 .addGap(35, 35, 35))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(556, 556, 556)
+                .addComponent(jLabelBooking)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabelBooking)
-                .addGap(52, 52, 52)
+                .addComponent(jLabelBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextFieldRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -562,34 +573,40 @@ public class JDialogPayment extends javax.swing.JDialog {
                 jTextFieldPhone.setText(rs.getString(5));
                 jTextFieldCheckIN.setText(rs.getString(6));
                 jTextFieldPrice.setText(rs.getString(11));
-               
-                
                 jTextFieldNumOfDays.setText(rs.getString(12));
                 
-                SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
-                Calendar cal = Calendar.getInstance();
-                jTextFieldCheckOUT.setText(myFormat.format(cal.getTime()));
                 
-                String dateBeforeString = rs.getString(6);
-                java.util.Date dateBefore = myFormat.parse(dateBeforeString);
-                dateBefore.toString();
-                String dateAfterString = myFormat.format(cal.getTime());
-                java.util.Date dateAfter = myFormat.parse(dateAfterString);
+                jTextFieldCheckOUT.setEditable(true);
                 
-                long difference = dateAfter.getTime() - dateBefore.getTime();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+     
+                String date_in = rs.getString(6);
+                java.util.Date din = dateFormat.parse(date_in);
+                din.toString();
+                
+                String date_out = jTextFieldCheckOUT.getText();
+                java.util.Date dout = dateFormat.parse(date_out);
+                dout.toString();
+
+                long difference = dout.getTime() - din.getTime();
                 int numberOfDays = (int) (difference/(1000*60*60*24));
                 if(numberOfDays==0)
                     numberOfDays=1;
                 jTextFieldNumOfDays.setText(String.valueOf(numberOfDays));
-                
-            
+
                 float price = Float.parseFloat(jTextFieldPrice.getText());
                 jTextFieldTotalAmount.setText(String.valueOf(numberOfDays*price));
-                
 
                 rType = rs.getString(9);
                 rBeds = rs.getString(10);
-                        
+                
+                if(numberOfDays < 0){
+                    jTextFieldNumOfDays.setText("");
+                    jTextFieldTotalAmount.setText("");
+                    JOptionPane.showMessageDialog(rootPane, "Check OUT date must be equals or after from Check IN date!","Check OUT incorrect!",JOptionPane.ERROR_MESSAGE);
+                    resetAction();
+                }
+              
             }
             else
                 JOptionPane.showMessageDialog(rootPane, "Room Number is Not Booked or Room Number does Not Exist","Room Number ERROR",JOptionPane.ERROR_MESSAGE);
@@ -617,11 +634,11 @@ public class JDialogPayment extends javax.swing.JDialog {
          Query = " UPDATE ROOM SET rStatus='Not Booked' WHERE rID="+jTextFieldRoomID.getText()+" ";
          InsertUpdateDelete.setData(Query, "");
          
-         String path="D:\\HotelReservationApp\\paymentBookingID_";
+         String path="D:\\HotelReservationApp\\Payment for BookingID_";
          com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
          try
          {
-             PdfWriter.getInstance(doc, new FileOutputStream(path+""+bID+".pdf"));
+             PdfWriter.getInstance(doc, new FileOutputStream(path+""+bID+" and RoomID_"+roomID+".pdf"));
              doc.open();
              Paragraph paragraphTitle = new Paragraph("                                                      HOTEL RESEVATION APP\n");
              doc.add(paragraphTitle);
@@ -655,11 +672,11 @@ public class JDialogPayment extends javax.swing.JDialog {
          {
             try
             {
-                 if((new File("D:\\"+bID+".pdf")).exists())
+                 if((new File("D:\\"+bID+roomID+".pdf")).exists())
                  {
                      Process p = Runtime
                              .getRuntime()
-                             .exec("rundll32 url.dll, FileProtocolHandler D:\\"+bID+".pdf");
+                             .exec("rundll32 url.dll, FileProtocolHandler D:\\"+bID+roomID+".pdf");
                  }
                  else
                      System.out.println("File is not Exists!");
