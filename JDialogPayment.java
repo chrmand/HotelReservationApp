@@ -8,6 +8,7 @@ package hotelreservationapp;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Image;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -21,8 +22,12 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.JOptionPane.showConfirmDialog;
 import javax.swing.table.DefaultTableModel;
 import java.text.ParseException;
+import javax.swing.ImageIcon;
+
+
 
 /**
  *
@@ -421,11 +426,11 @@ public class JDialogPayment extends javax.swing.JDialog {
                         .addGap(72, 72, 72)
                         .addComponent(jLabelNumberOfDays)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldNumOfDays, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)
+                        .addComponent(jTextFieldNumOfDays, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldTotalAmount))
+                        .addComponent(jTextFieldTotalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -453,7 +458,7 @@ public class JDialogPayment extends javax.swing.JDialog {
                         .addComponent(jTextFieldRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonSearch)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -634,12 +639,15 @@ public class JDialogPayment extends javax.swing.JDialog {
          Query = " UPDATE ROOM SET rStatus='Not Booked' WHERE rID="+jTextFieldRoomID.getText()+" ";
          InsertUpdateDelete.setData(Query, "");
          
-         String path="D:\\HotelReservationApp\\Payment for BookingID_";
+         String path="D:\\HotelReservationApp\\";
          com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
          try
          {
-             PdfWriter.getInstance(doc, new FileOutputStream(path+""+bID+" and RoomID_"+roomID+".pdf"));
+             PdfWriter.getInstance(doc, new FileOutputStream(path+"Payment for BookingID_"+bID+" and RoomID_"+roomID+".pdf"));
              doc.open();
+             
+             Image img = Image.getInstance("D:\\HotelReservationApp\\src\\icons\\welcome-background-transparent.png");
+             doc.add(img);
              Paragraph paragraphTitle = new Paragraph("                                                      HOTEL RESEVATION APP\n");
              doc.add(paragraphTitle);
              Paragraph paragraphStars = new Paragraph("****************************************************************************************************************");
@@ -650,12 +658,12 @@ public class JDialogPayment extends javax.swing.JDialog {
              Paragraph paragraph4 = new Paragraph("\t~Room Details~\nRoom Number: "+roomID+"\nRoom Type: "+rType+"\nBeds: "+rBeds+"\nPrice Per Day: "+jTextFieldPrice.getText()+"");
              doc.add(paragraph4);
              doc.add(paragraphStars);
-             PdfPTable table1 = new  PdfPTable(4);
-             table1.addCell("Check IN Date: "+jTextFieldCheckIN.getText());
-             table1.addCell("Check OUT Date: "+jTextFieldCheckOUT.getText());
-             table1.addCell("Number of Days Stay: "+jTextFieldNumOfDays.getText());
-             table1.addCell("Total Amount Paid: "+totalAmount);
-             doc.add(table1);
+             PdfPTable table = new  PdfPTable(4);
+             table.addCell("Check IN Date: "+jTextFieldCheckIN.getText());
+             table.addCell("Check OUT Date: "+jTextFieldCheckOUT.getText());
+             table.addCell("Number of Days Stay: "+jTextFieldNumOfDays.getText());
+             table.addCell("Total Amount Paid: "+totalAmount);
+             doc.add(table);
              doc.add(paragraphStars);
              Paragraph paragraphThanks = new Paragraph("                  Thank you for your preference, it would be a pleasure for us to come back!");
              doc.add(paragraphThanks);
@@ -667,16 +675,17 @@ public class JDialogPayment extends javax.swing.JDialog {
              JOptionPane.showMessageDialog(null, e);
          }
          doc.close();
-         int a=JOptionPane.showConfirmDialog(null, "Do you want to print Bill?","Select", JOptionPane.YES_NO_OPTION);
+         ImageIcon iconPDF = new ImageIcon("D:\\HotelReservationApp\\src\\icons\\icons-pdf.png");
+         int a=JOptionPane.showConfirmDialog(null, "Do you want to print Bill?","Select", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, iconPDF);
          if(a==0)
          {
             try
             {
-                 if((new File("D:\\"+bID+roomID+".pdf")).exists())
+                 if((new File("D:\\HotelReservationApp\\" + "Payment for BookingID_"+bID+" and RoomID_"+roomID+".pdf")).exists())
                  {
                      Process p = Runtime
                              .getRuntime()
-                             .exec("rundll32 url.dll, FileProtocolHandler D:\\"+bID+roomID+".pdf");
+                             .exec("rundll32 url.dll, FileProtocolHandler D:\\HotelReservationApp\\" + "Payment for BookingID_"+bID+" and RoomID_"+roomID+".pdf");
                  }
                  else
                      System.out.println("File is not Exists!");
