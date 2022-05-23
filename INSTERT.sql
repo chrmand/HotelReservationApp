@@ -1,4 +1,3 @@
-
 ----------------------------------------------------STORAGE INSERTS------------------------------------------------------------
 
 INSERT INTO STORAGE (sStorageName, sID, sCategory, sProductName, sQuantity)
@@ -37,48 +36,6 @@ VALUES ('Linen Storage', '206', 'Linen Product', 'Hand Towel', '50');
 
 
 ----------------------------------------------------EMPLOYEE INSERTS------------------------------------------------------------
-/*
-INSERT INTO EMPLOYEE (eAFM, eFirstname, eLastname, eHireDate, eType, managesStorageID)
-
-VALUES (123456789, 'Christos', 'Mandravelis', TO_DATE('19/03/2022'), 'A', 1);
-
-INSERT INTO EMPLOYEE VALUES 
-(123456799, 'Maria', 'Karavasili', TO_DATE('19/03/2022'), 'E', NULL);
-
-INSERT INTO EMPLOYEE VALUES 
-(223456789, 'Kostas', 'Kapas', TO_DATE('28/05/2022'), 'E', NULL);
-
-INSERT INTO EMPLOYEE VALUES 
-(223456719, 'Alexandra', 'Pasourh', TO_DATE('22/05/2022'), 'E', NULL);
-
-INSERT INTO EMPLOYEE VALUES 
-(223456700, 'Mixaela', 'Giasourh', TO_DATE('22/05/2022'), 'A', 1);
-
-INSERT INTO EMPLOYEE VALUES 
-(223456110, 'Lakis', 'Kamakaris', TO_DATE('22/06/2022'), 'E', NULL);
-*/
-
-
-/* LAST UPDATE
-INSERT INTO EMPLOYEE (eAFM, eFirstname, eLastname, eHireDate, eType, managesStorageCategory)
-
-VALUES (123456789, 'Christos', 'Mandravelis', TO_DATE('19/03/2022'), 'A', NULL);
-
-INSERT INTO EMPLOYEE VALUES 
-(123456799, 'Maria', 'Karavasili', TO_DATE('19/03/2022'), 'E', NULL);
-
-INSERT INTO EMPLOYEE VALUES 
-(223456789, 'Kostas', 'Kapas', TO_DATE('28/05/2022'), 'E', NULL);
-
-INSERT INTO EMPLOYEE VALUES 
-(223456719, 'Alexandra', 'Pasourh', TO_DATE('22/05/2022'), 'E', NULL);
-
-INSERT INTO EMPLOYEE VALUES 
-(223456700, 'Mixaela', 'Giasourh', TO_DATE('22/05/2022'), 'A', NULL);
-
-INSERT INTO EMPLOYEE VALUES 
-(223456110, 'Lakis', 'Kamakaris', TO_DATE('22/06/2022'), 'E', NULL);
-*/
 
 INSERT INTO EMPLOYEE (eAFM, eFirstname, eLastname, eHireDate)
 
@@ -100,7 +57,6 @@ INSERT INTO EMPLOYEE VALUES
 (223456110, 'Lakis', 'Kamakaris', TO_DATE('22/06/2022'));
 
 
-
 ----------------------------------------------------CLIENT INSERTS------------------------------------------------------------
 INSERT INTO CLIENT (cAFM, cFirstname, cLastname, cPhone, cCountry, cCity, cStreet, cNum, cTK)
 
@@ -120,24 +76,6 @@ VALUES (123111115, 'Alexia', 'Skalkh', 698123324, 'Greece', 'Lamia', 'Hpyrou', 6
 
 INSERT INTO CLIENT 
 VALUES (123111116, 'Zoi', 'Grafidou', 698123325, 'Greece', 'Volos', 'Agias', 8, 52009);
-
-
-----------------------------------------------------LOGIN INSERTS------------------------------------------------------------
-/*
-INSERT INTO LOGIN (lAFM, lPassword, lType, employeeAFM)
-
-VALUES (123456789, 'chris123', 'admin', 123456789);
-
-INSERT INTO LOGIN VALUES 
-(123456799, 'maria123', 'employee', 123456799);
-
-INSERT INTO LOGIN VALUES 
-(223456789, 'kostas123', 'employee', 223456789);
-
-INSERT INTO LOGIN VALUES 
-(223456110, 'lakis123', 'employee', 223456110);
-
-*/
 
 ----------------------------------------------------ROOM INSERTS----------------------------------------------------------------
 
@@ -183,7 +121,6 @@ VALUES ('2', 123111112, 'Katerina', 'Nikou', 698123321, TO_DATE('02/05/2022'), 2
 
 INSERT INTO BOOKING 
 VALUES ('3', 123111113, 'Giannis', 'Emmanouhl', 698123322, TO_DATE('27/04/2022'), 3,  11, 'Triklino', 3, 50, null, null, TO_DATE(''));
-
 
 commit;
 
