@@ -3,8 +3,6 @@ Hotel Reservation Desktop App with Local DataBase. #Languages: ( JAVA (swing) + 
 
 This application was created for the thesis!
 
-
 App 100% READY!!
 
-
-Word (Book) 93% ready...
+Word (Book) 100% READY!!
