@@ -6,3 +6,5 @@ This application was created for the thesis!
 App 100% READY!!
 
 Word (Book) 100% READY!!
+
+Ready to publish!
