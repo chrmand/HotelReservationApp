@@ -5,7 +5,7 @@
  */
 package hotelreservationapp;
 
-import com.sun.istack.internal.logging.Logger;
+
 import com.sun.javafx.applet.Splash;
 import java.awt.*;
 import java.sql.*;

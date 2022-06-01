@@ -244,7 +244,6 @@ public class JDialogConnect extends javax.swing.JDialog {
 
     private void jButtonConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnectActionPerformed
         okAction();
-        
     }//GEN-LAST:event_jButtonConnectActionPerformed
 
     /**

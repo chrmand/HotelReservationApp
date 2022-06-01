@@ -37,13 +37,16 @@ public class JDialogBooking extends javax.swing.JDialog {
         initComponents();
         paintColorBackground();
         
-        autoID();
         userChoosedOkFlag=false;
         
          //Εμφανίζει το JDialogBooking στη μέση της οθονης   
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
+        
+        if(jTextFieldBookingID.getText().isEmpty()){
+        jTextFieldBookingID.setText("1");
+        }
 
     }
     
@@ -60,11 +63,11 @@ public class JDialogBooking extends javax.swing.JDialog {
      */
     public void deleteBookingAction() {
        if(jComboBoxRoomID.getSelectedItem().equals("ID")){
-           JOptionPane.showMessageDialog(rootPane, "Please fill in Room Number to remove!","Delete ERROR",JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(rootPane, "Please fill in Room ID to remove!","Delete ERROR",JOptionPane.ERROR_MESSAGE);
        }else{
         String query = "DELETE BOOKING WHERE bID="+jTextFieldBookingID.getText()+" ";
         System.out.println("Query: \t" + query);
-        JOptionPane.showMessageDialog(rootPane, "Deleted Successfully!","Deleted",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(rootPane, "Room Deleted Successfully!","Deleted",JOptionPane.INFORMATION_MESSAGE);
         
  
         String Query = "UPDATE ROOM SET rStatus= 'Not Booked' WHERE rID= "+jComboBoxRoomID.getSelectedItem()+" ";
@@ -215,8 +218,6 @@ public class JDialogBooking extends javax.swing.JDialog {
         jTextFieldPhone.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 4));
         jTextFieldCheckIN.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 5));
         jTextFieldPersons.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 6));
-        //jComboBoxRoomID.getSelectedItem() = 7
-        //jComboBoxType.getSelectedItem() = 8
         jTextFieldPrice.setText(""+jTableBooking.getModel().getValueAt(jTableBooking.getSelectedRow(), 10));  
   
         comboBoxSelectGetValues();
@@ -301,14 +302,13 @@ public class JDialogBooking extends javax.swing.JDialog {
         }
 
     }
-    
-    
+  
     public void checkIn() {
-        //int bID = 1;
         String Query = ("SELECT max(bID) FROM BOOKING");
         String price = jTextFieldPrice.getText();
-
+        
         try {
+            
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
      
                String date_in = jTextFieldCheckIN.getText();
@@ -331,15 +331,11 @@ public class JDialogBooking extends javax.swing.JDialog {
 
             ResultSet rs = Select.getData("INSERT INTO BOOKING(bID, clientAFM, bFirstname, bLastname, bPhone, bCheckIN, bPersons, roomID, bRoomType, bRoomBeds, bPrice) VALUES('"+jTextFieldBookingID.getText()+"', "+jTextFieldClientAFM.getText()+", '"+jTextFieldFirstname.getText()+"', '"+jTextFieldLastname.getText()+"', "+jTextFieldPhone.getText()+",  TO_DATE('"+jTextFieldCheckIN.getText()+"','DD/MM/YYYY'), "+jTextFieldPersons.getText()+", "+(String)jComboBoxRoomID.getSelectedItem()+", '"+(String)jComboBoxType.getSelectedItem()+"', "+(String)jComboBoxBeds.getSelectedItem()+", "+jTextFieldPrice.getText()+") ");
             if (rs.next()){ 
-             // bID = rs.getInt(1);
-           // bID = bID + 1;
-              
-              
+  
             
                 if (!price.equals("")) {
                     Query = "UPDATE ROOM SET rStatus= 'Booked' WHERE rID=" + (String) jComboBoxRoomID.getSelectedItem() + " ";
                     InsertUpdateDelete.setData(Query, "");
-                    //Query = "INSERT INTO BOOKING(bID, clientAFM, bFirstname, bLastname, bPhone, bCheckIN, bPersons, roomID, bRoomType, bRoomBeds, bPrice) VALUES('"+jTextFieldBookingID.getText()+"', "+jTextFieldClientAFM.getText()+", '"+jTextFieldFirstname.getText()+"', '"+jTextFieldLastname.getText()+"', "+jTextFieldPhone.getText()+",  TO_DATE('"+jTextFieldCheckIN.getText()+"','DD/MM/YYYY'), "+jTextFieldPersons.getText()+", "+(String)jComboBoxRoomID.getSelectedItem()+", '"+(String)jComboBoxType.getSelectedItem()+"', "+(String)jComboBoxBeds.getSelectedItem()+", "+jTextFieldPrice.getText()+") ";
                     InsertUpdateDelete.setData(Query, "Client " + jTextFieldFirstname.getText() +" "+ jTextFieldLastname.getText() + " with AFM " + jTextFieldClientAFM.getText() + "\n and Phone Number " + jTextFieldPhone.getText() +"\n has CHECK IN the Room Number " + "[ "+ (String)jComboBoxRoomID.getSelectedItem() + " ]"+  "\n SUCCESSFULLY..! ");                  
 
                     System.out.println("Query: "+Query);
@@ -359,34 +355,12 @@ public class JDialogBooking extends javax.swing.JDialog {
                 }
         } catch (SQLException ex) {
             showMessageDialog(this, ex.getMessage()); 
-            
         }
            catch (ParseException ex) {
             Logger.getLogger(JDialogBooking.class.getName()).log(Level.SEVERE, null, ex);
         }
   }
-    
-    public void autoID(){
-        
-        try{
-            Statement st;
-            st = MainMenu.con.createStatement(java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                                    java.sql.ResultSet.CONCUR_READ_ONLY);
-            
-            ResultSet rs = st.executeQuery("SELECT MAX(bID) FROM BOOKING");
-            rs.next();
-            rs.getString("MAX(bID)");
-            
-            if(rs.getString("MAX(bID)") == null){
-                jTextFieldBookingID.setText("1");
-            }
-
-            rs.close();
-            
-        }catch (SQLException ex) {
-            showMessageDialog(this, ex.getMessage()); 
-        }
-    }
+   
     
 /**
 * 

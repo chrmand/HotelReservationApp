@@ -82,7 +82,7 @@ public class JDialogPayment extends javax.swing.JDialog {
         getContentPane().setBackground(col);
     }
     
-    //int id=0;
+  
     String Query;
     String rType;
     String rBeds;
@@ -544,19 +544,19 @@ public class JDialogPayment extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void jTextFieldNumOfDaysCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldNumOfDaysCaretUpdate
-        //okEnableCheckAction();
+        
     }//GEN-LAST:event_jTextFieldNumOfDaysCaretUpdate
 
     private void jTextFieldCheckOUTCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldCheckOUTCaretUpdate
-        //okEnableCheckAction();
+        
     }//GEN-LAST:event_jTextFieldCheckOUTCaretUpdate
 
     private void jTextFieldCheckINCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldCheckINCaretUpdate
-        //okEnableCheckAction();
+        
     }//GEN-LAST:event_jTextFieldCheckINCaretUpdate
 
     private void jTextFieldBookingIDCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldBookingIDCaretUpdate
-       // okEnableCheckAction();
+      
     }//GEN-LAST:event_jTextFieldBookingIDCaretUpdate
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -570,7 +570,6 @@ public class JDialogPayment extends javax.swing.JDialog {
                 jTextFieldRoomID.setEditable(false);
                 jButtonReset.setVisible(true);
                 jButtonCheckOUT.setEnabled(true);
-               // id=rs.getInt(1);
                 jTextFieldBookingID.setText(rs.getString(1));
                 jTextFieldAFM.setText(rs.getString(2));
                 jTextFieldFirstname.setText(rs.getString(3));
@@ -639,6 +638,10 @@ public class JDialogPayment extends javax.swing.JDialog {
          Query = " UPDATE ROOM SET rStatus='Not Booked' WHERE rID="+jTextFieldRoomID.getText()+" ";
          InsertUpdateDelete.setData(Query, "");
          
+         JOptionPane.showMessageDialog(rootPane, "Check OUT Successfully!","Check Out",JOptionPane.INFORMATION_MESSAGE);
+         deletePaymentAction();
+         loadPayment();
+         
          String path="D:\\HotelReservationApp\\";
          com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
          try
@@ -697,7 +700,6 @@ public class JDialogPayment extends javax.swing.JDialog {
             
          }
          
-        deletePaymentAction();
         setVisible(false);     
         JDialogPayment conPayment = new JDialogPayment(null, true);
         conPayment.setVisible(true);

@@ -199,10 +199,11 @@ public class JDialogRoom extends javax.swing.JDialog {
     
     public void resetAction(){
         jTextFieldID.setText("");
-        jComboBoxType.setSelectedIndex(-1);
-        jComboBoxBeds.setSelectedIndex(-1);
+        jComboBoxType.setSelectedIndex(0);
+        jComboBoxBeds.setSelectedIndex(0);
         jTextFieldPrice.setText("");
-        
+    
+        jButtonReset.setEnabled(false);
     }
     
     
@@ -392,14 +393,14 @@ public class JDialogRoom extends javax.swing.JDialog {
             }
         });
 
-        jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monoklino", "Diklino", "Triklino" }));
+        jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Type", "Monoklino", "Diklino", "Triklino" }));
         jComboBoxType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxTypeActionPerformed(evt);
             }
         });
 
-        jComboBoxBeds.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+        jComboBoxBeds.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Beds", "1", "2", "3" }));
         jComboBoxBeds.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxBedsActionPerformed(evt);

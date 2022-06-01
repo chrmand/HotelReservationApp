@@ -5,6 +5,7 @@
  */
 package hotelreservationapp;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.ResultSet;
@@ -28,6 +29,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
     public JDialogEmployee(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        paintColorBackground();
         
         userChoosedOkFlag=false;
         
@@ -37,11 +39,16 @@ public class JDialogEmployee extends javax.swing.JDialog {
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
     }
     
+       public void paintColorBackground() {
+        Color col = new Color(148, 222, 222);
+        getContentPane().setBackground(col);
+    }
+    
     /**
      * Insert Action Button
      */
     public void insertEmployeeAction() {
-        String query = "INSERT INTO EMPLOYEE(eAFM, eFirstname, eLastname, eHireDate, eType, managesStorageID) VALUES("+jTextFieldAFM.getText()+", '" +jTextFieldFirstname.getText()+ "', '" +jTextFieldLastname.getText()+ "', TO_DATE('"+jTextFieldHireDate.getText()+"','DD/MM/YYYY'), '"+jComboBoxType.getSelectedItem()+"', "+jTextFieldManagesStorageID.getText()+")";
+        String query = "INSERT INTO EMPLOYEE(eAFM, eFirstname, eLastname, eHireDate) VALUES("+jTextFieldAFM.getText()+", '" +jTextFieldFirstname.getText()+ "', '" +jTextFieldLastname.getText()+ "', TO_DATE('"+jTextFieldHireDate.getText()+"','DD/MM/YYYY') )";
         System.out.println("Query: \t" + query);
         Statement insertStatement;
         
@@ -63,9 +70,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
         String query="UPDATE EMPLOYEE " +
                 " SET eFirstname='" +jTextFieldFirstname.getText()+ "',"+
                 "     eLastname='" +jTextFieldLastname.getText()+ "',"+
-                "     eHireDate=TO_DATE('"+jTextFieldHireDate.getText()+"','DD/MM/YYYY'),"+
-                "     eType='"+jComboBoxType.getSelectedItem()+"',"+
-                "     managesStorageID="+jTextFieldManagesStorageID.getText()+" "+
+                "     eHireDate=TO_DATE('"+jTextFieldHireDate.getText()+"','DD/MM/YYYY') "+
                 " WHERE eAFM="+jTextFieldAFM.getText()+" ";
         
         System.out.println("Query: \t" + query);
@@ -105,7 +110,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
      */
     public void loadEmployee() {
         clearTable( (DefaultTableModel)jTableEmployee.getModel() );
-        String query = "SELECT eAFM, eFirstname, eLastname, TO_CHAR(eHireDate, 'DD/MM/YYYY'), eType, managesStorageID"
+        String query = "SELECT eAFM, eFirstname, eLastname, TO_CHAR(eHireDate, 'DD/MM/YYYY')"
                 + " FROM EMPLOYEE "
                 + " ORDER BY eHireDate" ;
         System.out.println("Query: \t" + query);
@@ -121,13 +126,11 @@ public class JDialogEmployee extends javax.swing.JDialog {
                 String firstname = searchRS.getString("eFirstname");
                 String lastname = searchRS.getString("eLastname");
                 String hiredate = searchRS.getString(4);
-                String type = searchRS.getString("eType");
-                String managesStorageID = searchRS.getString("managesStorageID");
-                
+    
                 
                 DefaultTableModel model = (DefaultTableModel)jTableEmployee.getModel();
                 model.addRow(
-                    new Object [] {afm,firstname,lastname,hiredate,type,managesStorageID}
+                    new Object [] {afm,firstname,lastname,hiredate}
                 );
                
             }
@@ -156,32 +159,14 @@ public class JDialogEmployee extends javax.swing.JDialog {
             model.removeRow(i);
         }    
     }
-    
-    /**
-     * 
-     * Εμφάνιση των δεδομένων από τα comboBox του Model του πίνακα όταν επιλέγουμε κάποια γραμμή.
-     */
-   public void comboBoxSelectGetValues(){
-       DefaultTableModel model = (DefaultTableModel) jTableEmployee.getModel();
-     
-       //jComboBoxType
-       String comboTypeSelect = model.getValueAt(jTableEmployee.getSelectedRow(), 4).toString();
-       for (int i = 0; i < jComboBoxType.getItemCount(); i++) {
-           if (jComboBoxType.getItemAt(i).equalsIgnoreCase(comboTypeSelect)) {
-               jComboBoxType.setSelectedIndex(i);
-           }
-       }
-   }
+   
     
     public void employeeTableMouseClickedAction(){
         jTextFieldAFM.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 0));
         jTextFieldFirstname.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 1));
         jTextFieldLastname.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 2));
         jTextFieldHireDate.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 3));
-        //jComboBoxType.getSelectedItem().equals(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 4));
-        jTextFieldManagesStorageID.setText(""+jTableEmployee.getModel().getValueAt(jTableEmployee.getSelectedRow(), 5));
-      
-        comboBoxSelectGetValues();
+
         
     }
     
@@ -190,9 +175,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
         jTextFieldFirstname.setText("");
         jTextFieldLastname.setText("");
         jTextFieldHireDate.setText("");
-        jComboBoxType.setSelectedItem("type");
-        jTextFieldManagesStorageID.setText("null");
-         
+        
     }
     
 
@@ -213,36 +196,21 @@ public class JDialogEmployee extends javax.swing.JDialog {
             jButtonDelete.setEnabled(true);
             if( (jTextFieldFirstname.getText().length()>0)  &&
                 (jTextFieldLastname.getText().length()>0) &&
-                (jTextFieldHireDate.getText().length()>0) &&
-                (jComboBoxType.getSelectedItem() == "A") )    
+                (jTextFieldHireDate.getText().length()>0))    
            
             {
                 
                 jButtonInsert.setEnabled(true);
                 jButtonUpdate.setEnabled(true);
                 
-               jTextFieldManagesStorageID.setEnabled(true);
               
             }
-    
-           
-            if(jComboBoxType.getSelectedItem() == "type" || jComboBoxType.getSelectedItem() == "E")
-            {
-                
-                jButtonInsert.setEnabled(true);
-                jButtonUpdate.setEnabled(true);
-                
-                jTextFieldManagesStorageID.setEnabled(false);
-                
- 
-            }
-            
+   
         }
          
             if( (jTextFieldFirstname.getText().length()>0)  ||
                 (jTextFieldLastname.getText().length()>0) ||
-                (jTextFieldHireDate.getText().length()>0) ||
-                (jComboBoxType.getSelectedItem().toString().length()>0) )
+                (jTextFieldHireDate.getText().length()>0) )
             {
                 jButtonReset.setEnabled(true);
             } 
@@ -268,14 +236,6 @@ public class JDialogEmployee extends javax.swing.JDialog {
         return this.jTextFieldHireDate.getText();
     }
     
-    public String getEType() {
-        return (String) this.jComboBoxType.getSelectedItem();
-    }
-
-    public String getManagesStorageID() {
-        return this.jTextFieldManagesStorageID.getText();
-    }
-    
     
     public boolean getUserChoosedOkFlag() {
         return this.userChoosedOkFlag;
@@ -291,9 +251,7 @@ public class JDialogEmployee extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabelEmployee = new javax.swing.JLabel();
-        jLabelManagesStorage = new javax.swing.JLabel();
         jLabelFirstname = new javax.swing.JLabel();
-        jTextFieldManagesStorageID = new javax.swing.JTextField();
         jTextFieldFirstname = new javax.swing.JTextField();
         jButtonInsert = new javax.swing.JButton();
         jLabelLastname = new javax.swing.JLabel();
@@ -307,8 +265,6 @@ public class JDialogEmployee extends javax.swing.JDialog {
         jTableEmployee = new javax.swing.JTable();
         jLabelHireDate = new javax.swing.JLabel();
         jTextFieldHireDate = new javax.swing.JTextField();
-        jLabelType = new javax.swing.JLabel();
-        jComboBoxType = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Employee Form");
@@ -321,19 +277,11 @@ public class JDialogEmployee extends javax.swing.JDialog {
         });
 
         jLabelEmployee.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabelEmployee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons-employee-2.png"))); // NOI18N
         jLabelEmployee.setText("EMPLOYEE");
-
-        jLabelManagesStorage.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelManagesStorage.setText("Manages StorageID");
 
         jLabelFirstname.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelFirstname.setText("Firstname");
-
-        jTextFieldManagesStorageID.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                jTextFieldManagesStorageIDCaretUpdate(evt);
-            }
-        });
 
         jTextFieldFirstname.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -402,14 +350,14 @@ public class JDialogEmployee extends javax.swing.JDialog {
 
             },
             new String [] {
-                "AFM", "Firstname", "Lastname", "Hire Date", "Type", "Manages StorageID"
+                "AFM", "Firstname", "Lastname", "Hire Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -426,6 +374,9 @@ public class JDialogEmployee extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jTableEmployee);
+        if (jTableEmployee.getColumnModel().getColumnCount() > 0) {
+            jTableEmployee.getColumnModel().getColumn(0).setPreferredWidth(50);
+        }
 
         jLabelHireDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelHireDate.setText("Hire Date");
@@ -436,11 +387,6 @@ public class JDialogEmployee extends javax.swing.JDialog {
             }
         });
 
-        jLabelType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelType.setText("Type");
-
-        jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "type", "A", "E" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -449,36 +395,26 @@ public class JDialogEmployee extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelFirstname)
                                 .addGap(45, 45, 45)
-                                .addComponent(jTextFieldFirstname))
+                                .addComponent(jTextFieldFirstname, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabelManagesStorage)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldManagesStorageID, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelLastname)
-                                            .addComponent(jLabelAFM)
-                                            .addComponent(jLabelHireDate)
-                                            .addComponent(jLabelType))
-                                        .addGap(45, 45, 45)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jTextFieldHireDate, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                                .addComponent(jTextFieldAFM)
-                                                .addComponent(jTextFieldLastname)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 312, Short.MAX_VALUE)
+                                    .addComponent(jLabelLastname)
+                                    .addComponent(jLabelAFM)
+                                    .addComponent(jLabelHireDate))
+                                .addGap(45, 45, 45)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldHireDate, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldAFM)
+                                    .addComponent(jTextFieldLastname))))
+                        .addGap(312, 312, 312)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButtonUpdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonInsert, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -488,14 +424,14 @@ public class JDialogEmployee extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelEmployee)
-                .addGap(245, 245, 245))
+                .addGap(221, 221, 221))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(20, 20, 20)
                 .addComponent(jLabelEmployee)
-                .addGap(19, 19, 19)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -514,22 +450,13 @@ public class JDialogEmployee extends javax.swing.JDialog {
                             .addComponent(jTextFieldLastname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(58, 58, 58)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelHireDate)
-                            .addComponent(jTextFieldHireDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelType)
-                            .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelManagesStorage)
-                            .addComponent(jTextFieldManagesStorageID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelHireDate)
+                        .addComponent(jTextFieldHireDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jButtonReset)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -538,10 +465,6 @@ public class JDialogEmployee extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextFieldManagesStorageIDCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldManagesStorageIDCaretUpdate
-        okEnableCheckAction();
-    }//GEN-LAST:event_jTextFieldManagesStorageIDCaretUpdate
 
     private void jTextFieldFirstnameCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldFirstnameCaretUpdate
         okEnableCheckAction();
@@ -641,20 +564,16 @@ public class JDialogEmployee extends javax.swing.JDialog {
     private javax.swing.JButton jButtonInsert;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonUpdate;
-    private javax.swing.JComboBox<String> jComboBoxType;
     private javax.swing.JLabel jLabelAFM;
     private javax.swing.JLabel jLabelEmployee;
     private javax.swing.JLabel jLabelFirstname;
     private javax.swing.JLabel jLabelHireDate;
     private javax.swing.JLabel jLabelLastname;
-    private javax.swing.JLabel jLabelManagesStorage;
-    private javax.swing.JLabel jLabelType;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEmployee;
     private javax.swing.JTextField jTextFieldAFM;
     private javax.swing.JTextField jTextFieldFirstname;
     private javax.swing.JTextField jTextFieldHireDate;
     private javax.swing.JTextField jTextFieldLastname;
-    private javax.swing.JTextField jTextFieldManagesStorageID;
     // End of variables declaration//GEN-END:variables
 }
