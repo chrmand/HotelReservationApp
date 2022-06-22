@@ -9,7 +9,7 @@ The app's form presentation is displayed!
 ![mainMenu](https://user-images.githubusercontent.com/48105724/175002856-fec461f6-e620-4d80-aa22-b95ea467c367.png)
 
 
-![employeeForm](https://user-images.githubusercontent.com/48105724/175002926-85c7b287-ef18-4ea3-97e7-f38533a54f89.png)
+![employeeForm](https://user-images.githubusercontent.com/48105724/175005734-bb1dc6c5-cd88-487e-9df4-8dc4483a728d.png)
 
 
 ![clientForm](https://user-images.githubusercontent.com/48105724/175002970-6d282378-13bb-4a40-aeb4-1cc1ef27292f.png)
