@@ -1,9 +1,9 @@
-# Hotel Reservation Application
-Hotel Reservation Desktop App with Local Database. 
-#Languages: ( JAVA (swing) + SQL (oracle) ).
-#Tools: NetBeans 12.2 and Oracle SQL Developer
+~ Hotel Reservation Application <br/>
+Hotel Reservation Desktop App with Local Database. <br/>
+#Languages: ( JAVA (swing) + SQL (oracle) ). <br/>
+#Tools: NetBeans 12.2 and Oracle SQL Developer <br/>
 
-The app's form presentation is displayed!
+The app's form presentation is displayed! <br/>
 
 --Main Form--
 ![mainMenu](https://user-images.githubusercontent.com/48105724/175002856-fec461f6-e620-4d80-aa22-b95ea467c367.png)
