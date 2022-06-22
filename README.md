@@ -1,5 +1,5 @@
-~ Hotel Reservation Application <br/>
-Hotel Reservation Desktop App with Local Database. <br/>
+~ Hotel Reservation Application ~ <br/>
+Has been created a Hotel Reservation Desktop Application with a Local Database. <br/>
 #Languages: ( JAVA (swing) + SQL (oracle) ). <br/>
 #Tools: NetBeans 12.2 and Oracle SQL Developer <br/>
 
